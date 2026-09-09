@@ -34,7 +34,7 @@ public abstract class Piece {
                 }
 
                 Piece piece = board.getPieces()[x][y];
-                if (piece != null && piece.getColor() == color) {
+                if (piece != null && piece.getColor() != color) {
                     moves.add(new Position(x, y));
                     break;
                 }
@@ -45,6 +45,9 @@ public abstract class Piece {
 
                 moves.add(new Position(x, y));
             }
+
+            x = position.getX();
+            y = position.getY();
         }
         return moves;
     }
