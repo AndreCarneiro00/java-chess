@@ -2,10 +2,9 @@ package com.portfolio.domain.board;
 
 import com.portfolio.domain.enums.ColorEnum;
 import com.portfolio.domain.piece.Bishop;
-import com.portfolio.domain.piece.Castle;
+import com.portfolio.domain.piece.Rook;
 import com.portfolio.domain.piece.King;
 import com.portfolio.domain.piece.Knight;
-import com.portfolio.domain.piece.Pawn;
 import com.portfolio.domain.piece.Queen;
 import com.portfolio.domain.piece.base.Piece;
 import com.portfolio.domain.piece.base.Position;
@@ -56,7 +55,7 @@ public class Board {
 
     private Piece instanciatePiece(ColorEnum color, Position position) {
         return switch (position.getY()) {
-            case 0, 7 -> new Castle(color, position);
+            case 0, 7 -> new Rook(color, position);
             case 1, 6 -> new Knight(color, position);
             case 2, 5 -> new Bishop(color, position);
             case 3 -> new Queen(color, position);
