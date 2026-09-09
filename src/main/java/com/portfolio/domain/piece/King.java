@@ -9,13 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
+    int[][] directions;
     public King(ColorEnum color, Position position) {
         super(color, position);
+        this.directions = new int[][] {
+                {1, 0},
+                {-1, 0},
+                {0, 1},
+                {0, -1},
+                {1, 1},
+                {-1, -1},
+                {1, -1},
+                {-1, 1},
+        };
     }
 
     @Override
     public List<Position> listPossibleMoves(Board board) {
-        return new ArrayList<>();
+        return possibleMoves(directions, board, 1);
     }
 
     @Override

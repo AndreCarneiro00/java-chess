@@ -15,21 +15,27 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public List<Position> possibleMoves(int[][] directions, Board board) {
+    public List<Position> possibleMoves(int[][] directions, Board board, Integer limit) {
         List<Position> moves = new ArrayList<>();
         int pace = 1;
         int boardSize = board.getSize();
 
-        int x = position.getX();
-        int y = position.getY();
-
         for (int[] direction : directions) {
             int xDirection = direction[0];
             int yDirection = direction[1];
+
+            int x = position.getX();
+            int y = position.getY();
+            int counter = 0;
+
             while (true) {
                 x = x + (pace * xDirection);
                 y = y + (pace * yDirection);
                 if (x < 0 || y < 0 || x >= boardSize|| y >= boardSize) {
+                    break;
+                }
+
+                if (limit != null && counter == limit) {
                     break;
                 }
 
@@ -44,12 +50,14 @@ public abstract class Piece {
                 }
 
                 moves.add(new Position(x, y));
+                counter++;
             }
-
-            x = position.getX();
-            y = position.getY();
         }
         return moves;
+    }
+
+    public List<Position> possibleMoves(int[][] directions, Board board) {
+        return this.possibleMoves(directions, board, null);
     }
 
     abstract public List<Position> listPossibleMoves(Board board);
