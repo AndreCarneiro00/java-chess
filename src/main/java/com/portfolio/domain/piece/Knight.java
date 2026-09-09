@@ -29,16 +29,21 @@ public class Knight extends Piece {
         List<Position> moves = new ArrayList<>();
         int boardSize = board.getSize();
         for (int[] lMove : lMoves) {
-            int x = lMove[0];
-            int y = lMove[1];
+            Position newPosition = new Position(position.getX() + lMove[0], position.getY() + lMove[1]);
+            int x = newPosition.getX();
+            int y = newPosition.getY();
 
             if (x < 0 || y < 0 || x >= boardSize|| y >= boardSize) {
                 continue;
             }
 
-            Position newPosition = new Position(position.getX() + x, position.getY() + y);
             Piece piece = board.getPieces()[newPosition.getX()][newPosition.getY()];
-            if (piece != null && piece.getColor() == color) {
+            if (piece != null && piece.getColor() != color) {
+                moves.add(newPosition);
+                continue;
+            }
+
+            if (piece != null) {
                 continue;
             }
 
@@ -49,7 +54,7 @@ public class Knight extends Piece {
 
     @Override
     public List<Position> listPossibleMoves(Board board) {
-        return possibleMoves(lMoves, board, 1);
+        return possibleMoves(lMoves, board);
     }
 
     @Override
