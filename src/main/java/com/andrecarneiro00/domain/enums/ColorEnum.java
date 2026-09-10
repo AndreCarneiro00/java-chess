@@ -1,4 +1,4 @@
-package com.portfolio.domain.enums;
+package com.andrecarneiro00.domain.enums;
 
 public enum ColorEnum {
     WHITE,

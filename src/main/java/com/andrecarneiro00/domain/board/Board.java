@@ -1,13 +1,14 @@
-package com.portfolio.domain.board;
+package com.andrecarneiro00.domain.board;
 
-import com.portfolio.domain.enums.ColorEnum;
-import com.portfolio.domain.piece.Bishop;
-import com.portfolio.domain.piece.Rook;
-import com.portfolio.domain.piece.King;
-import com.portfolio.domain.piece.Knight;
-import com.portfolio.domain.piece.Queen;
-import com.portfolio.domain.piece.base.Piece;
-import com.portfolio.domain.piece.base.Position;
+import com.andrecarneiro00.domain.enums.ColorEnum;
+import com.andrecarneiro00.domain.piece.Bishop;
+import com.andrecarneiro00.domain.piece.Pawn;
+import com.andrecarneiro00.domain.piece.Rook;
+import com.andrecarneiro00.domain.piece.King;
+import com.andrecarneiro00.domain.piece.Knight;
+import com.andrecarneiro00.domain.piece.Queen;
+import com.andrecarneiro00.domain.piece.base.Piece;
+import com.andrecarneiro00.domain.piece.base.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class Board {
         catchedPiecesByColor.put(ColorEnum.WHITE, new ArrayList<>());
         catchedPiecesByColor.put(ColorEnum.BLACK, new ArrayList<>());
         initiate();
+        pieces[4][2] = new Pawn(ColorEnum.WHITE, new Position(4, 2));
     }
 
     private void initiate() {
@@ -43,7 +45,7 @@ public class Board {
                 Position position = new Position(x, y);
 
                 if (x == 1 || x == 6) {
-//                    pieces[x][y] = new Pawn(color, position);
+                    pieces[x][y] = new Pawn(color, position);
                 } else if (x == 0 || x == 7) {
                     pieces[x][y] = instanciatePiece(color, position);
                 } else {
@@ -96,6 +98,8 @@ public class Board {
     public void movePiece(Position current, Position next) {
         Piece currentPiece = pieces[current.getX()][current.getY()];
         Piece nextPiece = pieces[next.getX()][next.getY()];
+//        handleEnPassant(currentPiece, nextPiece);
+
         List<Position> possibleMoves = currentPiece.listPossibleMoves(this);
         if (possibleMoves.contains(next)) {
             pieces[current.getX()][current.getY()] = null;
@@ -107,6 +111,35 @@ public class Board {
             }
             pieces[next.getX()][next.getY()] = currentPiece;
         }
+    }
+
+    public void handleEnPassant(Piece currentPiece, Piece nextPiece) {
+        int nextPieceX = nextPiece.getPosition().getX();
+        int nextPieceY = nextPiece.getPosition().getY();
+
+        if (nextPieceY - currentPiece.getPosition().getY() != 2 || !(currentPiece instanceof Pawn currentPawn)) {
+            return;
+        }
+
+        Piece nextPieceRightNeighbor = pieces[nextPieceX][nextPieceY + 1];
+        if (validateEnPassant(currentPawn, nextPieceRightNeighbor)) {
+            currentPawn.setRightEnPassant(true);
+        }
+        Piece nextPieceLeftNeighbor = pieces[nextPieceX][nextPieceY - 1];
+        if (validateEnPassant(currentPawn, nextPieceLeftNeighbor)) {
+            currentPawn.setRightEnPassant(true);
+        }
+    }
+
+    public boolean validateEnPassant(Pawn currentPiece, Piece neighbor) {
+        if (neighbor != null) {
+            return false;
+        }
+        if (neighbor.getColor() != currentPiece.getColor()) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

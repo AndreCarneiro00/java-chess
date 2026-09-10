@@ -1,10 +1,4 @@
-package com.portfolio.domain.piece.base;
-
-import com.portfolio.domain.board.Board;
-import com.portfolio.domain.enums.ColorEnum;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.andrecarneiro00.domain.piece.base;
 
 public class Position {
     private int x;

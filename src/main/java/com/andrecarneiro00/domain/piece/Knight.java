@@ -1,9 +1,9 @@
-package com.portfolio.domain.piece;
+package com.andrecarneiro00.domain.piece;
 
-import com.portfolio.domain.board.Board;
-import com.portfolio.domain.piece.base.Position;
-import com.portfolio.domain.enums.ColorEnum;
-import com.portfolio.domain.piece.base.Piece;
+import com.andrecarneiro00.domain.board.Board;
+import com.andrecarneiro00.domain.piece.base.Position;
+import com.andrecarneiro00.domain.enums.ColorEnum;
+import com.andrecarneiro00.domain.piece.base.Piece;
 
 import java.util.ArrayList;
 import java.util.List;

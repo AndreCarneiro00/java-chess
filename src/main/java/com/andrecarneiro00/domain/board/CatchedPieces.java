@@ -1,6 +1,6 @@
-package com.portfolio.domain.board;
+package com.andrecarneiro00.domain.board;
 
-import com.portfolio.domain.piece.base.Piece;
+import com.andrecarneiro00.domain.piece.base.Piece;
 
 import java.util.List;
 
