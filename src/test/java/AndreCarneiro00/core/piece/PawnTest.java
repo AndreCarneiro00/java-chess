@@ -36,7 +36,7 @@ public class PawnTest {
         List<Position> possibleMoves = pawn.listPossibleMoves(board);
         assertTrue(
                 possibleMoves.stream().
-                        filter(possibleMove -> possibleMove.getX() <= 4)
+                        filter(possibleMove -> possibleMove.getRow() <= 4)
                         .toList()
                         .isEmpty()
         );
@@ -49,7 +49,7 @@ public class PawnTest {
         List<Position> possibleMoves = pawn.listPossibleMoves(board);
         assertTrue(
                 possibleMoves.stream().
-                        filter(possibleMove -> possibleMove.getX() >= 4)
+                        filter(possibleMove -> possibleMove.getRow() >= 4)
                         .toList()
                         .isEmpty()
         );

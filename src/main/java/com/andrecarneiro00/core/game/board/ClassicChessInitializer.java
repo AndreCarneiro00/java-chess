@@ -12,32 +12,32 @@ import com.andrecarneiro00.core.piece.base.Position;
 
 public class ClassicChessInitializer implements BoardInitializer {
     public void init(Piece[][] pieces) {
-        for (int x = 0; x < pieces.length; x++) {
+        for (int row = 0; row < pieces.length; row++) {
             ColorEnum color = null;
-            if (x == 0 || x == 1) {
+            if (row == 0 || row == 1) {
                 color = ColorEnum.BLACK;
             }
 
-            if (x == 6 || x == 7) {
+            if (row == 6 || row == 7) {
                 color = ColorEnum.WHITE;
             }
 
-            for (int y = 0; y < pieces.length; y++) {
-                Position position = new Position(x, y);
+            for (int col = 0; col < pieces.length; col++) {
+                Position position = new Position(row, col);
 
-                if (x == 1 || x == 6) {
-                    pieces[x][y] = new Pawn(color, position);
-                } else if (x == 0 || x == 7) {
-                    pieces[x][y] = instanciatePiece(color, position);
+                if (row == 1 || row == 6) {
+                    pieces[row][col] = new Pawn(color, position);
+                } else if (row == 0 || row == 7) {
+                    pieces[row][col] = instanciatePiece(color, position);
                 } else {
-                    pieces[x][y] = null;
+                    pieces[row][col] = null;
                 }
             }
         }
     }
 
     private Piece instanciatePiece(ColorEnum color, Position position) {
-        return switch (position.getY()) {
+        return switch (position.getCol()) {
             case 0, 7 -> new Rook(color, position);
             case 1, 6 -> new Knight(color, position);
             case 2, 5 -> new Bishop(color, position);

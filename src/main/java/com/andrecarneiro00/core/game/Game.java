@@ -39,7 +39,7 @@ public class Game {
         if (!position.isValid(board.getSize())) {
             return false;
         }
-        Piece piece = board.getPieces()[position.getX()][position.getY()];
+        Piece piece = board.getPieces()[position.getRow()][position.getCol()];
         return piece != null && piece.getColor() == turn.getColor();
     }
 
@@ -48,7 +48,7 @@ public class Game {
             return new ArrayList<>();
         }
 
-        Piece piece = board.getPieces()[position.getX()][position.getY()];
+        Piece piece = board.getPieces()[position.getRow()][position.getCol()];
         if (piece == null) {
             return new ArrayList<>();
         }
@@ -56,27 +56,27 @@ public class Game {
         return piece.listPossibleMoves(board);
     }
 
-    public boolean movePiece(Position current, Position next) {
+    public boolean movePiece(Position current, Position target) {
         Piece[][] pieces = board.getPieces();
-        Piece currentPiece = pieces[current.getX()][current.getY()];
+        Piece currentPiece = pieces[current.getRow()][current.getCol()];
         if (currentPiece.getColor() != turn.getColor()) {
             return false;
         }
 
-        Piece nextPiece = pieces[next.getX()][next.getY()];
+        Piece targetPiece = pieces[target.getRow()][target.getCol()];
         List<Position> possibleMoves = listPossibleMovesByPosition(current);
-        if (!possibleMoves.contains(next)) {
+        if (!possibleMoves.contains(target)) {
             return false;
         }
 
-        pieces[current.getX()][current.getY()] = null;
-        currentPiece.getPosition().setX(next.getX());
-        currentPiece.getPosition().setY(next.getY());
+        pieces[current.getRow()][current.getCol()] = null;
+        currentPiece.getPosition().setRow(target.getRow());
+        currentPiece.getPosition().setCol(target.getCol());
 
-        if (nextPiece != null) {
-            turn.capture(nextPiece);
+        if (targetPiece != null) {
+            turn.capture(targetPiece);
         }
-        pieces[next.getX()][next.getY()] = currentPiece;
+        pieces[target.getRow()][target.getCol()] = currentPiece;
 
         if (currentPiece instanceof Pawn pawnPiece && !pawnPiece.getHasMoved()) {
             pawnPiece.setHasMoved(true);
@@ -86,20 +86,20 @@ public class Game {
         return true;
     }
 
-    public static  void handleEnPassant(Piece[][] pieces, Piece currentPiece, Piece nextPiece) {
-        int nextPieceX = nextPiece.getPosition().getX();
-        int nextPieceY = nextPiece.getPosition().getY();
+    public static void handleEnPassant(Piece[][] pieces, Piece currentPiece, Piece targetPiece) {
+        int targetRow = targetPiece.getPosition().getRow();
+        int targetCol = targetPiece.getPosition().getCol();
 
-        if (nextPieceY - currentPiece.getPosition().getY() != 2 || !(currentPiece instanceof Pawn currentPawn)) {
+        if (targetCol - currentPiece.getPosition().getCol() != 2 || !(currentPiece instanceof Pawn currentPawn)) {
             return;
         }
 
-        Piece nextPieceRightNeighbor = pieces[nextPieceX][nextPieceY + 1];
-        if (validateEnPassant(currentPawn, nextPieceRightNeighbor)) {
+        Piece targetRightNeighbor = pieces[targetRow][targetCol + 1];
+        if (validateEnPassant(currentPawn, targetRightNeighbor)) {
             currentPawn.setRightEnPassant(true);
         }
-        Piece nextPieceLeftNeighbor = pieces[nextPieceX][nextPieceY - 1];
-        if (validateEnPassant(currentPawn, nextPieceLeftNeighbor)) {
+        Piece targetLeftNeighbor = pieces[targetRow][targetCol - 1];
+        if (validateEnPassant(currentPawn, targetLeftNeighbor)) {
             currentPawn.setRightEnPassant(true);
         }
     }

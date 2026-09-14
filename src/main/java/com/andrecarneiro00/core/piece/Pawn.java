@@ -35,50 +35,50 @@ public class Pawn extends Piece {
     @Override
     public List<Position> listPossibleMoves(Board board) {
         List<Position> moves = new ArrayList<>();
-        int x = position.getX();
-        int y = position.getY();
+        int row = position.getRow();
+        int col = position.getCol();
         Piece[][] boardPieces = board.getPieces();
         int boardSize = board.getSize();
 
 
-        int doubleFrontX = this.color == ColorEnum.BLACK ? x + 2 : x - 2;
-        int frontX = this.color == ColorEnum.BLACK ? x + 1 : x - 1;
-        if (frontX >= boardSize || frontX < 0) {
+        int doubleFrontRow = this.color == ColorEnum.BLACK ? row + 2 : row - 2;
+        int frontRow = this.color == ColorEnum.BLACK ? row + 1 : row - 1;
+        if (frontRow >= boardSize || frontRow < 0) {
             return moves;
         }
 
-        Piece frontPiece = boardPieces[frontX][y];
-        if (doubleFrontX >= 0 && doubleFrontX < boardSize) {
-            Piece doubleFrontPiece = boardPieces[doubleFrontX][y];
+        Piece frontPiece = boardPieces[frontRow][col];
+        if (doubleFrontRow >= 0 && doubleFrontRow < boardSize) {
+            Piece doubleFrontPiece = boardPieces[doubleFrontRow][col];
             if (!hasMoved && frontPiece == null && doubleFrontPiece == null) {
-                moves.add(new Position(doubleFrontX, y));
+                moves.add(new Position(doubleFrontRow, col));
             }
         }
 
         if (frontPiece == null) {
-            moves.add(new Position(frontX, y));
+            moves.add(new Position(frontRow, col));
         }
 
-        if (y - 1 >= 0) {
-            Piece diagronalLeftPiece = boardPieces[frontX][y - 1];
+        if (col - 1 >= 0) {
+            Piece diagronalLeftPiece = boardPieces[frontRow][col - 1];
             if (diagronalLeftPiece != null && diagronalLeftPiece.getColor() != color) {
-                moves.add(new Position(frontX, y - 1));
+                moves.add(new Position(frontRow, col - 1));
             }
         }
 
-        if (y + 1 < boardSize) {
-            Piece diagonalRightPiece = boardPieces[frontX][y + 1];
+        if (col + 1 < boardSize) {
+            Piece diagonalRightPiece = boardPieces[frontRow][col + 1];
             if (diagonalRightPiece != null && diagonalRightPiece.getColor() != color) {
-                moves.add(new Position(frontX, y + 1));
+                moves.add(new Position(frontRow, col + 1));
             }
         }
 
 //        if (leftEnPassant) {
-//            moves.add(new Position(frontX, y + 1));
+//            moves.add(new Position(frontRow, col + 1));
 //        }
 //
 //        if (rightEnPassant) {
-//            moves.add(new Position(frontX, y + 1));
+//            moves.add(new Position(frontRow, col + 1));
 //        }
 
         return moves;

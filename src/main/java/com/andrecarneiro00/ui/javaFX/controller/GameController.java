@@ -24,8 +24,8 @@ public class GameController {
     }
 
     private void handleSquareClick(Position clickedPosition) {
-        System.out.println("Casa clicada: Linha " + clickedPosition.getX()
-                + ", Coluna " + clickedPosition.getY());
+        System.out.println("Casa clicada: Linha " + clickedPosition.getRow()
+                + ", Coluna " + clickedPosition.getCol());
 
         if (selectedPosition == null) {
             handlePieceSelection(clickedPosition);
@@ -62,7 +62,7 @@ public class GameController {
         selectedPosition = null;
 
         if (game.movePiece(current, target)) {
-            Piece piece = game.getBoard().getPieces()[target.getX()][target.getY()];
+            Piece piece = game.getBoard().getPieces()[target.getRow()][target.getCol()];
             boardView.changePiece(current, target, piece);
         } else {
             boardView.clearPossibleMoveMarkers();

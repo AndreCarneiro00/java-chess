@@ -92,8 +92,8 @@ public class BoardViewBuilder {
             int row = rowIndex == null ? 0 : rowIndex;
             int col = colIndex == null ? 0 : colIndex;
 
-            if (row == position.getX()
-                    && col == position.getY()
+            if (row == position.getRow()
+                    && col == position.getCol()
                     && node instanceof StackPane square) {
                 return square;
             }
@@ -158,8 +158,8 @@ public class BoardViewBuilder {
         return square;
     }
 
-    private boolean isLightSquare(int x, int y) {
-        return (x + y) % 2 == 0;
+    private boolean isLightSquare(int row, int col) {
+        return (row + col) % 2 == 0;
     }
 
 }

@@ -29,15 +29,15 @@ public class Knight extends Piece {
         List<Position> moves = new ArrayList<>();
         int boardSize = board.getSize();
         for (int[] lMove : lMoves) {
-            Position newPosition = new Position(position.getX() + lMove[0], position.getY() + lMove[1]);
-            int x = newPosition.getX();
-            int y = newPosition.getY();
+            Position newPosition = new Position(position.getRow() + lMove[0], position.getCol() + lMove[1]);
+            int row = newPosition.getRow();
+            int col = newPosition.getCol();
 
-            if (x < 0 || y < 0 || x >= boardSize|| y >= boardSize) {
+            if (row < 0 || col < 0 || row >= boardSize || col >= boardSize) {
                 continue;
             }
 
-            Piece piece = board.getPieces()[newPosition.getX()][newPosition.getY()];
+            Piece piece = board.getPieces()[newPosition.getRow()][newPosition.getCol()];
             if (piece != null && piece.getColor() != color) {
                 moves.add(newPosition);
                 continue;

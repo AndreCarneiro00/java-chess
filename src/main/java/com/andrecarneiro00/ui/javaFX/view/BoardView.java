@@ -40,7 +40,7 @@ public class BoardView {
         clearPossibleMoveMarkers();
 
         for (Position move : moves) {
-            StackPane square = findSquare(move.getX(), move.getY());
+            StackPane square = findSquare(move.getRow(), move.getCol());
             if (square == null) {
                 continue;
             }

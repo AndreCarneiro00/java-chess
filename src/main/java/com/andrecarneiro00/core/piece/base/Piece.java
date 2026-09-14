@@ -21,17 +21,17 @@ public abstract class Piece {
         int boardSize = board.getSize();
 
         for (int[] direction : directions) {
-            int xDirection = direction[0];
-            int yDirection = direction[1];
+            int rowDirection = direction[0];
+            int colDirection = direction[1];
 
-            int x = position.getX();
-            int y = position.getY();
+            int row = position.getRow();
+            int col = position.getCol();
             int counter = 0;
 
             while (true) {
-                x = x + (pace * xDirection);
-                y = y + (pace * yDirection);
-                if (x < 0 || y < 0 || x >= boardSize|| y >= boardSize) {
+                row = row + (pace * rowDirection);
+                col = col + (pace * colDirection);
+                if (row < 0 || col < 0 || row >= boardSize || col >= boardSize) {
                     break;
                 }
 
@@ -39,9 +39,9 @@ public abstract class Piece {
                     break;
                 }
 
-                Piece piece = board.getPieces()[x][y];
+                Piece piece = board.getPieces()[row][col];
                 if (piece != null && piece.getColor() != color) {
-                    moves.add(new Position(x, y));
+                    moves.add(new Position(row, col));
                     break;
                 }
 
@@ -49,7 +49,7 @@ public abstract class Piece {
                     break;
                 }
 
-                moves.add(new Position(x, y));
+                moves.add(new Position(row, col));
                 counter++;
             }
         }

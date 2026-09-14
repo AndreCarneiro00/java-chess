@@ -21,14 +21,14 @@ public class Board {
             sb.append(" ");
         }
         sb.append("\n");
-        for (int x = 0; x < size; x++) {
-            sb.append(x);
+        for (int row = 0; row < size; row++) {
+            sb.append(row);
             sb.append(" ");
-            for (int y = 0; y < size; y++) {
-                if (pieces[x][y] == null) {
+            for (int col = 0; col < size; col++) {
+                if (pieces[row][col] == null) {
                     sb.append(".");
                 } else {
-                    sb.append(pieces[x][y]);
+                    sb.append(pieces[row][col]);
                 }
                 sb.append(" ");
             }
