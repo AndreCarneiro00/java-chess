@@ -1,6 +1,7 @@
 package com.andrecarneiro00.core.piece;
 
 import com.andrecarneiro00.core.game.Board;
+import com.andrecarneiro00.core.piece.base.FirstMoveAware;
 import com.andrecarneiro00.core.piece.base.Position;
 import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.piece.base.Piece;
@@ -8,7 +9,7 @@ import com.andrecarneiro00.core.piece.base.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece {
+public class Pawn extends Piece implements FirstMoveAware {
     boolean hasMoved;
     boolean leftEnPassant;
     boolean rightEnPassant;
@@ -19,12 +20,12 @@ public class Pawn extends Piece {
         this.rightEnPassant = false;
     }
 
-    public boolean getHasMoved() {
+    public boolean hasMoved() {
         return hasMoved;
     }
 
-    public void setHasMoved(boolean b) {
-        this.hasMoved = b;
+    public void markAsMoved() {
+        this.hasMoved = true;
     }
 
     @Override

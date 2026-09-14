@@ -2,8 +2,8 @@ package com.andrecarneiro00.core.game;
 
 import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.game.board.BoardInitializer;
-import com.andrecarneiro00.core.game.board.ClassicChessInitializer;
 import com.andrecarneiro00.core.piece.Pawn;
+import com.andrecarneiro00.core.piece.base.FirstMoveAware;
 import com.andrecarneiro00.core.piece.base.Piece;
 import com.andrecarneiro00.core.piece.base.Position;
 
@@ -78,9 +78,10 @@ public class Game {
         }
         pieces[target.getRow()][target.getCol()] = currentPiece;
 
-        if (currentPiece instanceof Pawn pawnPiece && !pawnPiece.getHasMoved()) {
-            pawnPiece.setHasMoved(true);
+        if (currentPiece instanceof FirstMoveAware firstMovePiece && !firstMovePiece.hasMoved()) {
+            firstMovePiece.markAsMoved();
         }
+
         passTurn();
 
         return true;
