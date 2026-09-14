@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
 public class BoardView {
@@ -18,12 +19,16 @@ public class BoardView {
     private GridPane boardGrid;
     private BoardViewBuilder boardBuilder;
 
-    public Region build(Consumer<Position> onSquareClicked, Board board) {
+    public Region build(
+            Consumer<Position> onSquareClicked,
+            BiPredicate<Position, Position> onPieceDropped,
+            Board board
+    ) {
         GridPane grid = new GridPane();
         this.boardGrid = grid;
-        this.boardBuilder = new BoardViewBuilder(grid);
+        this.boardBuilder = new BoardViewBuilder(grid, onSquareClicked, onPieceDropped);
 
-        boardBuilder.renderBoard(board, onSquareClicked);
+        boardBuilder.renderBoard(board);
         return grid;
     }
 

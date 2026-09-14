@@ -20,7 +20,7 @@ public class GameController {
     }
 
     public Region initializeView() {
-        return boardView.build(this::handleSquareClick, game.getBoard());
+        return boardView.build(this::handleSquareClick, this::handlePieceDrop, game.getBoard());
     }
 
     private void handleSquareClick(Position clickedPosition) {
@@ -61,11 +61,23 @@ public class GameController {
         Position current = selectedPosition;
         selectedPosition = null;
 
-        if (game.movePiece(current, target)) {
+        movePiece(current, target);
+    }
+
+    private boolean handlePieceDrop(Position current, Position target) {
+        selectedPosition = null;
+        return movePiece(current, target);
+    }
+
+    private boolean movePiece(Position current, Position target) {
+        boolean moved = game.movePiece(current, target);
+        if (moved) {
             Piece piece = game.getBoard().getPieces()[target.getRow()][target.getCol()];
             boardView.changePiece(current, target, piece);
         } else {
             boardView.clearPossibleMoveMarkers();
         }
+
+        return moved;
     }
 }
