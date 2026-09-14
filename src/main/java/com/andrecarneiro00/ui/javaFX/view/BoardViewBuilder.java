@@ -13,6 +13,8 @@ import com.andrecarneiro00.core.piece.base.Position;
 import com.github.weisj.jsvg.SVGDocument;
 import com.github.weisj.jsvg.parser.SVGLoader;
 import com.github.weisj.jsvg.ui.jfx.FXSVGCanvas;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
@@ -25,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -35,6 +38,7 @@ import java.util.function.Consumer;
 public class BoardViewBuilder {
     private static final DataFormat CHESS_POSITION = new DataFormat("application/x-java-chess-position");
     private static final String PIECE_ASSET_PATH = "/com/andrecarneiro00/ui/javaFX/assets/";
+    private static final double SVG_INTRINSIC_SIZE = 45;
     private static final double PIECE_SIZE_RATIO = 0.75;
     private final Map<String, SVGDocument> pieceImageCache = new HashMap<>();
     private static final Map<Class<? extends Piece>, Map<ColorEnum, String>> PIECE_ASSETS = Map.of(
@@ -131,18 +135,36 @@ public class BoardViewBuilder {
             FXSVGCanvas canvas = new FXSVGCanvas();
             canvas.setRenderBackend(FXSVGCanvas.RenderBackend.JavaFX);
             canvas.setDocument(document);
-            canvas.setMinSize(0, 0);
-            canvas.prefWidthProperty().bind(square.widthProperty().multiply(PIECE_SIZE_RATIO));
-            canvas.prefHeightProperty().bind(square.heightProperty().multiply(PIECE_SIZE_RATIO));
-            canvas.maxWidthProperty().bind(square.widthProperty().multiply(PIECE_SIZE_RATIO));
-            canvas.maxHeightProperty().bind(square.heightProperty().multiply(PIECE_SIZE_RATIO));
+            canvas.setMinSize(SVG_INTRINSIC_SIZE, SVG_INTRINSIC_SIZE);
+            canvas.setPrefSize(SVG_INTRINSIC_SIZE, SVG_INTRINSIC_SIZE);
+            canvas.setMaxSize(SVG_INTRINSIC_SIZE, SVG_INTRINSIC_SIZE);
             canvas.setAnimated(false);
             canvas.setStyle("-fx-background-color: transparent;");
-            pieceNode = canvas;
+            pieceNode = createScalablePieceContainer(canvas, square);
         }
 
         configureDragSource(pieceNode, position);
         return pieceNode;
+    }
+
+    private StackPane createScalablePieceContainer(FXSVGCanvas canvas, StackPane square) {
+        StackPane container = new StackPane(canvas);
+        container.setMinSize(0, 0);
+        container.prefWidthProperty().bind(square.widthProperty().multiply(PIECE_SIZE_RATIO));
+        container.prefHeightProperty().bind(square.heightProperty().multiply(PIECE_SIZE_RATIO));
+        container.maxWidthProperty().bind(square.widthProperty().multiply(PIECE_SIZE_RATIO));
+        container.maxHeightProperty().bind(square.heightProperty().multiply(PIECE_SIZE_RATIO));
+        clipChildrenToBounds(container);
+
+        DoubleBinding scale = Bindings.createDoubleBinding(
+                () -> Math.min(container.getWidth(), container.getHeight()) / SVG_INTRINSIC_SIZE,
+                container.widthProperty(),
+                container.heightProperty()
+        );
+        canvas.scaleXProperty().bind(scale);
+        canvas.scaleYProperty().bind(scale);
+
+        return container;
     }
 
     private void configureDragSource(Node pieceNode, Position position) {
@@ -200,6 +222,7 @@ public class BoardViewBuilder {
         square.setMinSize(0, 0);
         square.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         square.setStyle("-fx-background-color: " + (isLight ? "#eeeed2" : "#769656") + ";");
+        clipChildrenToBounds(square);
 
         Position position = new Position(row, col);
         if (piece != null) {
@@ -212,6 +235,13 @@ public class BoardViewBuilder {
         configureDropTarget(square, position);
 
         return square;
+    }
+
+    private void clipChildrenToBounds(Region region) {
+        Rectangle clip = new Rectangle();
+        clip.widthProperty().bind(region.widthProperty());
+        clip.heightProperty().bind(region.heightProperty());
+        region.setClip(clip);
     }
 
     private void configureDropTarget(StackPane square, Position target) {
