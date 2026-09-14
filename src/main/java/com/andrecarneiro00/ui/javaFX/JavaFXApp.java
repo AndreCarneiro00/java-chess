@@ -16,8 +16,9 @@ public class JavaFXApp extends Application {
         BoardView boardView = new BoardView();
         GameController gameController = new GameController(game, boardView);
 
-        Scene scene = new Scene(gameController.initializeView(),400, 200);
+        Scene scene = new Scene(gameController.initializeView(), 800, 800);
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }

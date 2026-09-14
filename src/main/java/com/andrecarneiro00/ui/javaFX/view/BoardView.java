@@ -3,9 +3,15 @@ package com.andrecarneiro00.ui.javaFX.view;
 import com.andrecarneiro00.core.game.Board;
 import com.andrecarneiro00.core.piece.base.Piece;
 import com.andrecarneiro00.core.piece.base.Position;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -25,11 +31,42 @@ public class BoardView {
             Board board
     ) {
         GridPane grid = new GridPane();
+        configureGrid(grid, board.getSize());
         this.boardGrid = grid;
         this.boardBuilder = new BoardViewBuilder(grid, onSquareClicked, onPieceDropped);
 
         boardBuilder.renderBoard(board);
-        return grid;
+
+        StackPane root = new StackPane(grid);
+        root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: #312e2b;");
+
+        NumberBinding boardSize = Bindings.min(root.widthProperty(), root.heightProperty());
+        grid.prefWidthProperty().bind(boardSize);
+        grid.prefHeightProperty().bind(boardSize);
+        grid.maxWidthProperty().bind(boardSize);
+        grid.maxHeightProperty().bind(boardSize);
+
+        return root;
+    }
+
+    private void configureGrid(GridPane grid, int boardSize) {
+        grid.setMinSize(0, 0);
+
+        double cellPercentage = 100.0 / boardSize;
+        for (int index = 0; index < boardSize; index++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(cellPercentage);
+            column.setHgrow(Priority.ALWAYS);
+            column.setFillWidth(true);
+            grid.getColumnConstraints().add(column);
+
+            RowConstraints row = new RowConstraints();
+            row.setPercentHeight(cellPercentage);
+            row.setVgrow(Priority.ALWAYS);
+            row.setFillHeight(true);
+            grid.getRowConstraints().add(row);
+        }
     }
 
     public void changePiece(Position current, Position target, Piece piece) {
@@ -50,7 +87,8 @@ public class BoardView {
                 continue;
             }
 
-            Circle marker = new Circle(8, Color.rgb(90, 90, 90, 0.65));
+            Circle marker = new Circle(0, Color.rgb(90, 90, 90, 0.65));
+            marker.radiusProperty().bind(square.widthProperty().multiply(0.12));
             marker.setId(POSSIBLE_MOVE_MARKER);
             marker.setMouseTransparent(true);
             square.getChildren().add(marker);

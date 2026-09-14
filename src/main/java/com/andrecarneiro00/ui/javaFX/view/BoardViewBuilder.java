@@ -35,7 +35,7 @@ import java.util.function.Consumer;
 public class BoardViewBuilder {
     private static final DataFormat CHESS_POSITION = new DataFormat("application/x-java-chess-position");
     private static final String PIECE_ASSET_PATH = "/com/andrecarneiro00/ui/javaFX/assets/";
-    private static final double PIECE_IMAGE_SIZE = 45;
+    private static final double PIECE_SIZE_RATIO = 0.75;
     private final Map<String, SVGDocument> pieceImageCache = new HashMap<>();
     private static final Map<Class<? extends Piece>, Map<ColorEnum, String>> PIECE_ASSETS = Map.of(
             King.class, Map.of(
@@ -99,7 +99,7 @@ public class BoardViewBuilder {
 
         currentSquare.getChildren().clear();
         targetSquare.getChildren().clear();
-        targetSquare.getChildren().add(createPieceNode(piece, target));
+        targetSquare.getChildren().add(createPieceNode(piece, target, targetSquare));
     }
 
     private StackPane findSquare(Position position) {
@@ -119,7 +119,7 @@ public class BoardViewBuilder {
         return null;
     }
 
-    private Node createPieceNode(Piece piece, Position position) {
+    private Node createPieceNode(Piece piece, Position position, StackPane square) {
         String assetName = findPieceAssetName(piece);
         Node pieceNode;
         if (assetName == null) {
@@ -131,9 +131,11 @@ public class BoardViewBuilder {
             FXSVGCanvas canvas = new FXSVGCanvas();
             canvas.setRenderBackend(FXSVGCanvas.RenderBackend.JavaFX);
             canvas.setDocument(document);
-            canvas.setPrefSize(PIECE_IMAGE_SIZE, PIECE_IMAGE_SIZE);
-            canvas.setMinSize(PIECE_IMAGE_SIZE, PIECE_IMAGE_SIZE);
-            canvas.setMaxSize(PIECE_IMAGE_SIZE, PIECE_IMAGE_SIZE);
+            canvas.setMinSize(0, 0);
+            canvas.prefWidthProperty().bind(square.widthProperty().multiply(PIECE_SIZE_RATIO));
+            canvas.prefHeightProperty().bind(square.heightProperty().multiply(PIECE_SIZE_RATIO));
+            canvas.maxWidthProperty().bind(square.widthProperty().multiply(PIECE_SIZE_RATIO));
+            canvas.maxHeightProperty().bind(square.heightProperty().multiply(PIECE_SIZE_RATIO));
             canvas.setAnimated(false);
             canvas.setStyle("-fx-background-color: transparent;");
             pieceNode = canvas;
@@ -195,12 +197,13 @@ public class BoardViewBuilder {
 
     private Region createSquare(int row, int col, boolean isLight, Piece piece) {
         StackPane square = new StackPane();
-        square.setPrefSize(60, 60);
+        square.setMinSize(0, 0);
+        square.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         square.setStyle("-fx-background-color: " + (isLight ? "#eeeed2" : "#769656") + ";");
 
         Position position = new Position(row, col);
         if (piece != null) {
-            square.getChildren().add(createPieceNode(piece, position));
+            square.getChildren().add(createPieceNode(piece, position, square));
         }
 
         square.setOnMouseClicked(event ->
