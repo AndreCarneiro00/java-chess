@@ -1,6 +1,7 @@
 package com.andrecarneiro00.ui.javaFX.controller;
 
 import com.andrecarneiro00.core.game.Game;
+import com.andrecarneiro00.core.piece.base.Piece;
 import com.andrecarneiro00.core.piece.base.Position;
 import com.andrecarneiro00.ui.javaFX.view.BoardView;
 import javafx.scene.layout.Region;
@@ -61,7 +62,8 @@ public class GameController {
         selectedPosition = null;
 
         if (game.movePiece(current, target)) {
-            boardView.refresh(game.getBoard(), this::handleSquareClick);
+            Piece piece = game.getBoard().getPieces()[target.getX()][target.getY()];
+            boardView.changePiece(current, target, piece);
         } else {
             boardView.clearPossibleMoveMarkers();
         }
