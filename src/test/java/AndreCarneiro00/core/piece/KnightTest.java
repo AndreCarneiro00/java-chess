@@ -1,0 +1,76 @@
+package andrecarneiro00.core.piece;
+
+import com.andrecarneiro00.core.enums.ColorEnum;
+import com.andrecarneiro00.core.game.Board;
+import com.andrecarneiro00.core.game.board.EmptyInitializer;
+import com.andrecarneiro00.core.piece.Knight;
+import com.andrecarneiro00.core.piece.base.Position;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class KnightTest {
+    Board board;
+    @BeforeEach
+    public void setUp() {
+        board = new Board(8, new EmptyInitializer());
+    }
+
+    @Test
+    public void givenFreeKnight_whenListPossibleMoves_thenReturnEightMoves() {
+        Knight knight = new Knight(ColorEnum.BLACK, new Position(3,3));
+        board.getPieces()[3][3] = knight;
+        List<Position> possibleMoves = knight.listPossibleMoves(board);
+        assertEquals(8, possibleMoves.size());
+    }
+
+    @Test
+    public void givenBlockedBlackKnight_whenListPossibleMoves_thenReturnZeroMoves() {
+        Knight knight = new Knight(ColorEnum.BLACK, new Position(3,3));
+        Knight block1 = new Knight(ColorEnum.BLACK, new Position(1,2));
+        Knight block2 = new Knight(ColorEnum.BLACK, new Position(1,4));
+        Knight block3 = new Knight(ColorEnum.BLACK, new Position(5,4));
+        Knight block4 = new Knight(ColorEnum.BLACK, new Position(5,2));
+        Knight block5 = new Knight(ColorEnum.BLACK, new Position(2,5));
+        Knight block6 = new Knight(ColorEnum.BLACK, new Position(4,5));
+        Knight block7 = new Knight(ColorEnum.BLACK, new Position(2,1));
+        Knight block8 = new Knight(ColorEnum.BLACK, new Position(4,1));
+        board.getPieces()[3][3] = knight;
+        board.getPieces()[1][2] = block1;
+        board.getPieces()[1][4] = block2;
+        board.getPieces()[5][4] = block3;
+        board.getPieces()[5][2] = block4;
+        board.getPieces()[2][5] = block5;
+        board.getPieces()[4][5] = block6;
+        board.getPieces()[2][1] = block7;
+        board.getPieces()[4][1] = block8;
+        List<Position> possibleMoves = knight.listPossibleMoves(board);
+        assertTrue(possibleMoves.isEmpty());
+    }
+
+    @Test
+    public void givenCornerBlockedBlackKnight_whenListPossibleMoves_thenReturnZeroMoves() {
+        Knight knight = new Knight(ColorEnum.BLACK, new Position(0,0));
+        Knight block1 = new Knight(ColorEnum.BLACK, new Position(1,2));
+        Knight block2 = new Knight(ColorEnum.BLACK, new Position(2,1));
+        board.getPieces()[3][3] = knight;
+        board.getPieces()[1][2] = block1;
+        board.getPieces()[2][1] = block2;
+        List<Position> possibleMoves = knight.listPossibleMoves(board);
+        assertTrue(possibleMoves.isEmpty());
+
+        knight = new Knight(ColorEnum.BLACK, new Position(7,7));
+        block1 = new Knight(ColorEnum.BLACK, new Position(6,5));
+        block2 = new Knight(ColorEnum.BLACK, new Position(5,6));
+        board.getPieces()[7][7] = knight;
+        board.getPieces()[6][5] = block1;
+        board.getPieces()[5][6] = block2;
+        System.out.println(board);
+        possibleMoves = knight.listPossibleMoves(board);
+        assertTrue(possibleMoves.isEmpty());
+    }
+}
