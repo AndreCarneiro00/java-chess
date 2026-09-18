@@ -34,4 +34,9 @@ public class Player {
         return obj instanceof Player compared
                 && this.getColor() == compared.getColor();
     }
+
+    @Override
+    public String toString() {
+        return color.name();
+    }
 }

@@ -2,7 +2,7 @@ package andrecarneiro00.core.piece;
 
 import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.game.Board;
-import com.andrecarneiro00.core.game.board.EmptyInitializer;
+import com.andrecarneiro00.core.game.boardInitializers.EmptyInitializer;
 import com.andrecarneiro00.core.piece.Bishop;
 import com.andrecarneiro00.core.piece.base.Position;
 import org.junit.jupiter.api.BeforeEach;

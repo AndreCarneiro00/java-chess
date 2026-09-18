@@ -53,8 +53,33 @@ public class Knight extends Piece {
     }
 
     @Override
+    public boolean attacksPosition(Board board, Position target) {
+        int boardSize = board.getSize();
+        for (int[] lMove : lMoves) {
+            Position newPosition = new Position(position.getRow() + lMove[0], position.getCol() + lMove[1]);
+            int row = newPosition.getRow();
+            int col = newPosition.getCol();
+
+            if (row < 0 || col < 0 || row >= boardSize || col >= boardSize) {
+                continue;
+            }
+
+            if (target.equals(newPosition)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
     public List<Position> listPossibleMoves(Board board) {
         return possibleMoves(lMoves, board);
+    }
+
+    @Override
+    public Knight deepClone() {
+        return new Knight(color , new Position(this.position));
     }
 
     @Override

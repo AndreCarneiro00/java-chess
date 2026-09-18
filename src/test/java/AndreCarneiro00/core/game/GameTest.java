@@ -1,9 +1,10 @@
 package andrecarneiro00.core.game;
 
 import com.andrecarneiro00.core.enums.ColorEnum;
+import com.andrecarneiro00.core.enums.MoveResultEnum;
 import com.andrecarneiro00.core.game.Game;
 import com.andrecarneiro00.core.game.Player;
-import com.andrecarneiro00.core.game.board.EmptyInitializer;
+import com.andrecarneiro00.core.game.boardInitializers.EmptyInitializer;
 import com.andrecarneiro00.core.piece.base.Position;
 import com.andrecarneiro00.core.piece.Pawn;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,8 +90,8 @@ public class GameTest {
         game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.BLACK, new Position(1, 1));
         Position currentPosition = new Position(1, 1);
         Position nextPosition = new Position(2, 1);
-        boolean moves = game.movePiece(currentPosition, nextPosition);
-        assertFalse(moves);
+        MoveResultEnum result = game.movePiece(currentPosition, nextPosition);
+        assertEquals(MoveResultEnum.INVALID_MOVE, result);
     }
 
     @Test
@@ -99,8 +100,8 @@ public class GameTest {
         game.getBoard().getPieces()[1][0] = new Pawn(ColorEnum.BLACK, new Position(1, 0));
         Position currentPosition = new Position(0, 0);
         Position nextPosition = new Position(1, 0);
-        boolean moves = game.movePiece(currentPosition, nextPosition);
-        assertFalse(moves);
+        MoveResultEnum result = game.movePiece(currentPosition, nextPosition);
+        assertEquals(MoveResultEnum.INVALID_MOVE, result);
     }
 
     @Test
@@ -120,8 +121,8 @@ public class GameTest {
         game.getBoard().getPieces()[0][0] = new Pawn(ColorEnum.BLACK, new Position(0, 0));
         Position currentPosition = new Position(1, 1);
         Position nextPosition = new Position(0, 0);
-        boolean moved = game.movePiece(currentPosition, nextPosition);
-        assertTrue(moved);
+        MoveResultEnum result = game.movePiece(currentPosition, nextPosition);
+        assertEquals(MoveResultEnum.MOVED, result);
     }
 
     @Test
@@ -130,7 +131,7 @@ public class GameTest {
         Position currentPosition = new Position(7, 7);
         Position nextPosition = new Position(5, 7);
         game.movePiece(currentPosition, nextPosition);
-        boolean moved = game.movePiece(nextPosition, new Position(3, 7));
-        assertFalse(moved);
+        MoveResultEnum result = game.movePiece(nextPosition, new Position(3, 7));
+        assertEquals(MoveResultEnum.INVALID_MOVE, result);
     }
 }

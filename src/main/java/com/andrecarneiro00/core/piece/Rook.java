@@ -36,6 +36,20 @@ public class Rook extends Piece implements FirstMoveAware {
     }
 
     @Override
+    public boolean attacksPosition(Board board, Position target) {
+        return attacks(directions, board, target);
+    }
+
+    @Override
+    public Rook deepClone() {
+        Rook clone = new Rook(color, new Position(this.position));
+        if (this.hasMoved) {
+            clone.markAsMoved();
+        }
+        return clone;
+    }
+
+    @Override
     public String toString() {
         return "R";
     }

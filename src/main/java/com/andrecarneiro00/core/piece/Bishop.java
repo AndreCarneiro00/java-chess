@@ -25,6 +25,16 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean attacksPosition(Board board, Position target) {
+        return attacks(directions, board, target);
+    }
+
+    @Override
+    public Bishop deepClone() {
+        return new Bishop(color, new Position(this.position));
+    }
+
+    @Override
     public String toString() {
         return "B";
     }

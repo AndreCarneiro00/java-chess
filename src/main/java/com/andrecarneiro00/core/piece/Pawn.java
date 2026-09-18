@@ -41,7 +41,6 @@ public class Pawn extends Piece implements FirstMoveAware {
         Piece[][] boardPieces = board.getPieces();
         int boardSize = board.getSize();
 
-
         int doubleFrontRow = this.color == ColorEnum.BLACK ? row + 2 : row - 2;
         int frontRow = this.color == ColorEnum.BLACK ? row + 1 : row - 1;
         if (frontRow >= boardSize || frontRow < 0) {
@@ -91,6 +90,41 @@ public class Pawn extends Piece implements FirstMoveAware {
 
     public void setRightEnPassant(boolean b) {
         this.rightEnPassant = b;
+    }
+
+    @Override
+    public boolean attacksPosition(Board board, Position target) {
+        int row = position.getRow();
+        int col = position.getCol();
+        Piece[][] boardPieces = board.getPieces();
+        int boardSize = board.getSize();
+
+
+        int frontRow = this.color == ColorEnum.BLACK ? row + 1 : row - 1;
+        if (frontRow >= boardSize || frontRow < 0) {
+            return false;
+        }
+
+        if (col - 1 >= 0) {
+            Piece diagronalLeftPiece = boardPieces[frontRow][col - 1];
+            return diagronalLeftPiece != null && diagronalLeftPiece.getColor() != color && diagronalLeftPiece.getPosition().equals(target);
+        }
+
+        if (col + 1 < boardSize) {
+            Piece diagonalRightPiece = boardPieces[frontRow][col + 1];
+            return diagonalRightPiece != null && diagonalRightPiece.getColor() != color && diagonalRightPiece.getPosition().equals(target);
+        }
+
+        return false;
+    }
+
+    @Override
+    public Pawn deepClone() {
+        Pawn clone = new Pawn(color, new Position(this.position));
+        if (this.hasMoved) {
+            clone.markAsMoved();
+        }
+        return clone;
     }
 
     @Override

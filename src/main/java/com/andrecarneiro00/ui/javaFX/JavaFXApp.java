@@ -1,7 +1,7 @@
 package com.andrecarneiro00.ui.javaFX;
 
 import com.andrecarneiro00.core.game.Game;
-import com.andrecarneiro00.core.game.board.ClassicChessInitializer;
+import com.andrecarneiro00.core.game.boardInitializers.ClassicChessInitializer;
 import com.andrecarneiro00.ui.javaFX.controller.GameController;
 import com.andrecarneiro00.ui.javaFX.view.BoardView;
 import javafx.application.Application;

@@ -1,5 +1,6 @@
 package com.andrecarneiro00.ui.terminal;
 
+import com.andrecarneiro00.core.enums.MoveResultEnum;
 import com.andrecarneiro00.core.game.Board;
 import com.andrecarneiro00.core.game.Game;
 import com.andrecarneiro00.core.game.Player;
@@ -41,9 +42,16 @@ public class TerminalUI{
                 break;
             }
 
-            boolean moved = game.movePiece(current, target);
-            if (!moved) {
+            MoveResultEnum result = game.movePiece(current, target);
+            if (result == MoveResultEnum.INVALID_MOVE) {
                 System.out.println("Try again!\n");
+                continue;
+            }
+
+            if (result.isGameOver()) {
+                System.out.println(game.getBoard());
+                System.out.println(result == MoveResultEnum.CHECKMATE ? "Checkmate!" : "Stalemate!");
+                break;
             }
         }
     }

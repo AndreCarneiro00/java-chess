@@ -29,6 +29,16 @@ public class Queen extends Piece {
     }
 
     @Override
+    public boolean attacksPosition(Board board, Position target) {
+        return attacks(directions, board, target);
+    }
+
+    @Override
+    public Queen deepClone() {
+        return new Queen(color, new Position(this.position));
+    }
+
+    @Override
     public String toString() {
         return "Q";
     }

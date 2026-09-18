@@ -48,6 +48,20 @@ public class King extends Piece implements FirstMoveAware {
     }
 
     @Override
+    public boolean attacksPosition(Board board, Position target) {
+        return attacks(directions, board, target, 1);
+    }
+
+    @Override
+    public King deepClone() {
+        King clone =  new King(color, new Position(this.position));
+        if (this.hasMoved) {
+            clone.markAsMoved();
+        }
+        return clone;
+    }
+
+    @Override
     public String toString() {
         return "K";
     }

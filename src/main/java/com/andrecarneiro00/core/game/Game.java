@@ -1,7 +1,9 @@
 package com.andrecarneiro00.core.game;
 
 import com.andrecarneiro00.core.enums.ColorEnum;
-import com.andrecarneiro00.core.game.board.BoardInitializer;
+import com.andrecarneiro00.core.enums.MoveResultEnum;
+import com.andrecarneiro00.core.game.boardInitializers.BoardInitializer;
+import com.andrecarneiro00.core.piece.King;
 import com.andrecarneiro00.core.piece.Pawn;
 import com.andrecarneiro00.core.piece.base.FirstMoveAware;
 import com.andrecarneiro00.core.piece.base.Piece;
@@ -13,14 +15,20 @@ import java.util.List;
 public class Game {
     Board board;
     Player player1;
+    King whiteKing;
     Player player2;
+    King blackKing;
     Player turn;
+    Player winner;
 
     public Game(int size, BoardInitializer initializer) {
         this.board = new Board(size, initializer);
         this.player1 = new Player(ColorEnum.WHITE);
+        this.whiteKing = board.searchKingByColor(ColorEnum.WHITE);
         this.player2 = new Player(ColorEnum.BLACK);
+        this.blackKing = board.searchKingByColor(ColorEnum.BLACK);
         this.turn = player1;
+        this.winner = null;
     }
 
     public Board getBoard() {
@@ -31,8 +39,52 @@ public class Game {
         return turn;
     }
 
+    public Player nextTurn() {
+        return this.turn.equals(player1) ? player2 : player1;
+    }
+
     private void passTurn() {
-        this.turn = this.turn.equals(player1) ? player2 : player1;
+        this.turn = nextTurn();
+    }
+
+    public boolean isPlayerWithoutMovement(ColorEnum turnColor) {
+        int size = board.getSize();
+        Piece[][] pieces = board.getPieces();
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                Piece piece = pieces[row][col];
+                if (piece != null && piece.getColor() == turnColor && !listPossibleMovesByPosition(piece.getPosition()).isEmpty()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validateCheckMate() {
+        ColorEnum color = turn.getColor();
+        Position kingPosition = getKingByColor(color).getPosition();
+        if (
+                board.isPositionUnderAttack(kingPosition, color)
+                && isPlayerWithoutMovement(color)
+        ) {
+            this.winner = nextTurn();
+            System.out.println(winner);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean validateStalemate() {
+        ColorEnum color = turn.getColor();
+        if (isPlayerWithoutMovement(color)) {
+            System.out.println(winner);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean validateSelectedPosition(Position position) {
@@ -53,20 +105,46 @@ public class Game {
             return new ArrayList<>();
         }
 
-        return piece.listPossibleMoves(board);
+        List<Position> possibleMoves = piece.listPossibleMoves(board);
+
+        Position kingPosition = getKingByColor(piece.getColor()).getPosition();
+        if (!kingPosition.equals(position)) {
+            possibleMoves = possibleMoves.stream()
+                    .filter(
+                            (target) -> !board.project(position, target)
+                                        .isPositionUnderAttack(kingPosition, piece.getColor())
+                    ).toList();
+        } else {
+            possibleMoves = possibleMoves.stream()
+                    .filter(
+                            (target) -> {
+                                Position kPosition = new Position(kingPosition);
+                                kPosition.setRow(target.getRow());
+                                kPosition.setCol(target.getCol());
+                                return !board.project(position, target)
+                                        .isPositionUnderAttack(kPosition, piece.getColor());
+                            }
+                    ).toList();
+        }
+
+        return possibleMoves;
     }
 
-    public boolean movePiece(Position current, Position target) {
+    public MoveResultEnum movePiece(Position current, Position target) {
         Piece[][] pieces = board.getPieces();
         Piece currentPiece = pieces[current.getRow()][current.getCol()];
         if (currentPiece.getColor() != turn.getColor()) {
-            return false;
+            return MoveResultEnum.INVALID_MOVE;
         }
 
         Piece targetPiece = pieces[target.getRow()][target.getCol()];
         List<Position> possibleMoves = listPossibleMovesByPosition(current);
         if (!possibleMoves.contains(target)) {
-            return false;
+            return MoveResultEnum.INVALID_MOVE;
+        }
+
+        if (kingWillBeUnderAttackByColor(current, target, turn.getColor())) {
+            return MoveResultEnum.INVALID_MOVE;
         }
 
         pieces[current.getRow()][current.getCol()] = null;
@@ -82,9 +160,49 @@ public class Game {
             firstMovePiece.markAsMoved();
         }
 
+        if (currentPiece instanceof King king) {
+            if (king.getColor() == ColorEnum.BLACK) {
+                this.blackKing = king;
+            } else {
+                this.whiteKing = king;
+            }
+        }
+
         passTurn();
 
-        return true;
+        boolean checkmate = validateCheckMate();
+
+        if (!checkmate) {
+            boolean stalemate = validateStalemate();
+            return stalemate ? MoveResultEnum.STALEMATE : MoveResultEnum.MOVED;
+        }
+
+        return MoveResultEnum.CHECKMATE;
+    }
+
+    private King getKingByColor(ColorEnum color) {
+        if (color == ColorEnum.BLACK) {
+            return blackKing;
+        } else {
+            return whiteKing;
+        }
+    }
+
+    private boolean isKingUnderAttackByColor(ColorEnum color) {
+        Position kingPosition = getKingByColor(color).getPosition();
+        if (board.isPositionUnderAttack(kingPosition, color)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean kingWillBeUnderAttackByColor(Position current, Position target, ColorEnum color) {
+        Position kingPosition = getKingByColor(color).getPosition();
+        if (kingPosition.equals(current)) {
+            kingPosition = new Position(target);
+        }
+
+        return board.project(current, target).isPositionUnderAttack(kingPosition, color);
     }
 
     public static void handleEnPassant(Piece[][] pieces, Piece currentPiece, Piece targetPiece) {

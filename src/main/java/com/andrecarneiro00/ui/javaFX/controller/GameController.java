@@ -1,5 +1,6 @@
 package com.andrecarneiro00.ui.javaFX.controller;
 
+import com.andrecarneiro00.core.enums.MoveResultEnum;
 import com.andrecarneiro00.core.game.Game;
 import com.andrecarneiro00.core.piece.base.Piece;
 import com.andrecarneiro00.core.piece.base.Position;
@@ -66,18 +67,18 @@ public class GameController {
 
     private boolean handlePieceDrop(Position current, Position target) {
         selectedPosition = null;
-        return movePiece(current, target);
+        return movePiece(current, target).isMoveApplied();
     }
 
-    private boolean movePiece(Position current, Position target) {
-        boolean moved = game.movePiece(current, target);
-        if (moved) {
+    private MoveResultEnum movePiece(Position current, Position target) {
+        MoveResultEnum result = game.movePiece(current, target);
+        if (result.isMoveApplied()) {
             Piece piece = game.getBoard().getPieces()[target.getRow()][target.getCol()];
             boardView.changePiece(current, target, piece);
         } else {
             boardView.clearPossibleMoveMarkers();
         }
 
-        return moved;
+        return result;
     }
 }
