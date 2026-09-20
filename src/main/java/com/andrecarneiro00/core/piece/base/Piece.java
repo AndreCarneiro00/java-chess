@@ -1,18 +1,17 @@
 package com.andrecarneiro00.core.piece.base;
 
-import com.andrecarneiro00.core.game.Board;
+import com.andrecarneiro00.core.game.board.Board;
 import com.andrecarneiro00.core.enums.ColorEnum;
+import com.andrecarneiro00.core.game.board.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
     protected ColorEnum color;
-    protected Position position;
 
-    public Piece(ColorEnum color, Position position) {
+    public Piece(ColorEnum color) {
         this.color = color;
-        this.position = position;
     }
 
     protected List<Position> possibleMoves(int[][] directions, Board board, Integer limit) {
@@ -23,6 +22,7 @@ public abstract class Piece {
             int rowDirection = direction[0];
             int colDirection = direction[1];
 
+            Position position = board.piecePosition(this);
             int row = position.getRow();
             int col = position.getCol();
             int counter = 0;
@@ -38,9 +38,10 @@ public abstract class Piece {
                     break;
                 }
 
-                Piece piece = board.getPieces()[row][col];
+                Position movePosition = new Position(row, col);
+                Piece piece = board.pieceAt(movePosition);
                 if (piece != null && piece.getColor() != color) {
-                    moves.add(new Position(row, col));
+                    moves.add(movePosition);
                     break;
                 }
 
@@ -48,7 +49,7 @@ public abstract class Piece {
                     break;
                 }
 
-                moves.add(new Position(row, col));
+                moves.add(movePosition);
                 counter++;
             }
         }
@@ -62,6 +63,7 @@ public abstract class Piece {
             int rowDirection = direction[0];
             int colDirection = direction[1];
 
+            Position position = board.piecePosition(this);
             int row = position.getRow();
             int col = position.getCol();
 
@@ -77,7 +79,7 @@ public abstract class Piece {
                     break;
                 }
 
-                Piece piece = board.getPieces()[row][col];
+                Piece piece = board.pieceAt(new Position(row, col));
                 if (row == target.getRow() && col == target.getCol()) {
                     return true;
                 }
@@ -105,19 +107,7 @@ public abstract class Piece {
 
     abstract public boolean attacksPosition(Board board, Position target);
 
-    public Position getPosition() {
-        return position;
-    }
-
     public ColorEnum getColor() {
         return color;
-    }
-
-    public abstract Piece deepClone();
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Piece piece
-               && piece.position.equals(this.position);
     }
 }

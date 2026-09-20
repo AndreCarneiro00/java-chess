@@ -1,8 +1,8 @@
 package com.andrecarneiro00.core.piece;
 
-import com.andrecarneiro00.core.game.Board;
+import com.andrecarneiro00.core.game.board.Board;
 import com.andrecarneiro00.core.piece.base.FirstMoveAware;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.piece.base.Piece;
 
@@ -11,8 +11,8 @@ import java.util.List;
 public class Rook extends Piece implements FirstMoveAware {
     int[][] directions;
     boolean hasMoved;
-    public Rook(ColorEnum color, Position position) {
-        super(color, position);
+    public Rook(ColorEnum color) {
+        super(color);
         this.directions = new int[][] {
                 {1, 0},
                 {-1, 0},
@@ -38,15 +38,6 @@ public class Rook extends Piece implements FirstMoveAware {
     @Override
     public boolean attacksPosition(Board board, Position target) {
         return attacks(directions, board, target);
-    }
-
-    @Override
-    public Rook deepClone() {
-        Rook clone = new Rook(color, new Position(this.position));
-        if (this.hasMoved) {
-            clone.markAsMoved();
-        }
-        return clone;
     }
 
     @Override

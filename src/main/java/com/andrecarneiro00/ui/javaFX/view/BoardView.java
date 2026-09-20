@@ -1,8 +1,8 @@
 package com.andrecarneiro00.ui.javaFX.view;
 
-import com.andrecarneiro00.core.game.Board;
+import com.andrecarneiro00.core.game.board.Board;
 import com.andrecarneiro00.core.piece.base.Piece;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.geometry.Pos;

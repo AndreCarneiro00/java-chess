@@ -1,7 +1,7 @@
 package com.andrecarneiro00.core.piece;
 
-import com.andrecarneiro00.core.game.Board;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Board;
+import com.andrecarneiro00.core.game.board.Position;
 import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.piece.base.Piece;
 
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Queen extends Piece {
     int[][] directions;
-    public Queen(ColorEnum color, Position position) {
-        super(color, position);
+    public Queen(ColorEnum color) {
+        super(color);
         this.directions = new int[][] {
                 {1, 0},
                 {-1, 0},
@@ -31,11 +31,6 @@ public class Queen extends Piece {
     @Override
     public boolean attacksPosition(Board board, Position target) {
         return attacks(directions, board, target);
-    }
-
-    @Override
-    public Queen deepClone() {
-        return new Queen(color, new Position(this.position));
     }
 
     @Override

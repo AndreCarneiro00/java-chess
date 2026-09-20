@@ -1,7 +1,7 @@
 package com.andrecarneiro00.ui.javaFX.view;
 
 import com.andrecarneiro00.core.enums.ColorEnum;
-import com.andrecarneiro00.core.game.Board;
+import com.andrecarneiro00.core.game.board.Board;
 import com.andrecarneiro00.core.piece.Bishop;
 import com.andrecarneiro00.core.piece.King;
 import com.andrecarneiro00.core.piece.Knight;
@@ -9,7 +9,7 @@ import com.andrecarneiro00.core.piece.Pawn;
 import com.andrecarneiro00.core.piece.Queen;
 import com.andrecarneiro00.core.piece.Rook;
 import com.andrecarneiro00.core.piece.base.Piece;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 import com.github.weisj.jsvg.SVGDocument;
 import com.github.weisj.jsvg.parser.SVGLoader;
 import com.github.weisj.jsvg.ui.jfx.FXSVGCanvas;
@@ -83,10 +83,9 @@ public class BoardViewBuilder {
     }
 
     public void renderBoard(Board board) {
-        Piece[][] pieces = board.getPieces();
         for (int row = 0; row < board.getSize(); row++) {
             for (int col = 0; col < board.getSize(); col++) {
-                Piece piece = pieces[row][col];
+                Piece piece = board.pieceAt(new Position(row, col));
                 Region square = createSquare(row, col, isLightSquare(row, col), piece);
                 boardGrid.add(square, col, row);
             }

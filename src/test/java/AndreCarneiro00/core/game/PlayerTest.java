@@ -4,7 +4,7 @@ import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.game.Player;
 import com.andrecarneiro00.core.piece.Pawn;
 import com.andrecarneiro00.core.piece.base.Piece;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

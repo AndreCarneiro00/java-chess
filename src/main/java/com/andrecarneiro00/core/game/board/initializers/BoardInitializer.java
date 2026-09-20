@@ -1,4 +1,4 @@
-package com.andrecarneiro00.core.game.boardInitializers;
+package com.andrecarneiro00.core.game.board.initializers;
 
 import com.andrecarneiro00.core.piece.base.Piece;
 

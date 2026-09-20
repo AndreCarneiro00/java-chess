@@ -1,10 +1,10 @@
 package andrecarneiro00.core.piece;
 
 import com.andrecarneiro00.core.enums.ColorEnum;
-import com.andrecarneiro00.core.game.Board;
-import com.andrecarneiro00.core.game.boardInitializers.EmptyInitializer;
+import com.andrecarneiro00.core.game.board.Board;
+import com.andrecarneiro00.core.game.board.initializers.EmptyInitializer;
 import com.andrecarneiro00.core.piece.Rook;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

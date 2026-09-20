@@ -1,7 +1,7 @@
 package com.andrecarneiro00.core.piece;
 
-import com.andrecarneiro00.core.game.Board;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Board;
+import com.andrecarneiro00.core.game.board.Position;
 import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.piece.base.Piece;
 
@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Knight extends Piece {
     int[][] lMoves;
-    public Knight(ColorEnum color, Position position) {
-        super(color, position);
+    public Knight(ColorEnum color) {
+        super(color);
         this.lMoves = new int[][] {
                 {2, 1},
                 {2, -1},
@@ -28,6 +28,7 @@ public class Knight extends Piece {
     public List<Position> possibleMoves(int[][] lMoves, Board board) {
         List<Position> moves = new ArrayList<>();
         int boardSize = board.getSize();
+        Position position = board.piecePosition(this);
         for (int[] lMove : lMoves) {
             Position newPosition = new Position(position.getRow() + lMove[0], position.getCol() + lMove[1]);
             int row = newPosition.getRow();
@@ -37,7 +38,7 @@ public class Knight extends Piece {
                 continue;
             }
 
-            Piece piece = board.getPieces()[newPosition.getRow()][newPosition.getCol()];
+            Piece piece = board.pieceAt(newPosition);
             if (piece != null && piece.getColor() != color) {
                 moves.add(newPosition);
                 continue;
@@ -55,6 +56,7 @@ public class Knight extends Piece {
     @Override
     public boolean attacksPosition(Board board, Position target) {
         int boardSize = board.getSize();
+        Position position = board.piecePosition(this);
         for (int[] lMove : lMoves) {
             Position newPosition = new Position(position.getRow() + lMove[0], position.getCol() + lMove[1]);
             int row = newPosition.getRow();
@@ -75,11 +77,6 @@ public class Knight extends Piece {
     @Override
     public List<Position> listPossibleMoves(Board board) {
         return possibleMoves(lMoves, board);
-    }
-
-    @Override
-    public Knight deepClone() {
-        return new Knight(color , new Position(this.position));
     }
 
     @Override

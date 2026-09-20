@@ -1,4 +1,4 @@
-package com.andrecarneiro00.core.game.boardInitializers;
+package com.andrecarneiro00.core.game.board.initializers;
 
 import com.andrecarneiro00.core.enums.ColorEnum;
 import com.andrecarneiro00.core.piece.Bishop;
@@ -8,7 +8,7 @@ import com.andrecarneiro00.core.piece.Pawn;
 import com.andrecarneiro00.core.piece.Queen;
 import com.andrecarneiro00.core.piece.Rook;
 import com.andrecarneiro00.core.piece.base.Piece;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 
 public class ClassicChessInitializer implements BoardInitializer {
     public void init(Piece[][] pieces) {
@@ -26,7 +26,7 @@ public class ClassicChessInitializer implements BoardInitializer {
                 Position position = new Position(row, col);
 
                 if (row == 1 || row == 6) {
-                    pieces[row][col] = new Pawn(color, position);
+                    pieces[row][col] = new Pawn(color);
                 } else if (row == 0 || row == 7) {
                     pieces[row][col] = instanciatePiece(color, position);
                 } else {
@@ -38,11 +38,11 @@ public class ClassicChessInitializer implements BoardInitializer {
 
     private Piece instanciatePiece(ColorEnum color, Position position) {
         return switch (position.getCol()) {
-            case 0, 7 -> new Rook(color, position);
-            case 1, 6 -> new Knight(color, position);
-            case 2, 5 -> new Bishop(color, position);
-            case 3 -> new Queen(color, position);
-            case 4 -> new King(color, position);
+            case 0, 7 -> new Rook(color);
+            case 1, 6 -> new Knight(color);
+            case 2, 5 -> new Bishop(color);
+            case 3 -> new Queen(color);
+            case 4 -> new King(color);
             default -> null;
         };
     }

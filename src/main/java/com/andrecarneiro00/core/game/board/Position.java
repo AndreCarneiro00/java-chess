@@ -1,8 +1,8 @@
-package com.andrecarneiro00.core.piece.base;
+package com.andrecarneiro00.core.game.board;
 
 public class Position {
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
 
     public Position(int row, int col) {
         this.row = row;
@@ -20,14 +20,6 @@ public class Position {
 
     public int getCol() {
         return col;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
     }
 
     public boolean isValid(int limit) {

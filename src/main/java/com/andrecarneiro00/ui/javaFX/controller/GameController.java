@@ -3,7 +3,7 @@ package com.andrecarneiro00.ui.javaFX.controller;
 import com.andrecarneiro00.core.enums.MoveResultEnum;
 import com.andrecarneiro00.core.game.Game;
 import com.andrecarneiro00.core.piece.base.Piece;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 import com.andrecarneiro00.ui.javaFX.view.BoardView;
 import javafx.scene.layout.Region;
 
@@ -73,7 +73,7 @@ public class GameController {
     private MoveResultEnum movePiece(Position current, Position target) {
         MoveResultEnum result = game.movePiece(current, target);
         if (result.isMoveApplied()) {
-            Piece piece = game.getBoard().getPieces()[target.getRow()][target.getCol()];
+            Piece piece = game.getBoard().pieceAt(target);
             boardView.changePiece(current, target, piece);
         } else {
             boardView.clearPossibleMoveMarkers();

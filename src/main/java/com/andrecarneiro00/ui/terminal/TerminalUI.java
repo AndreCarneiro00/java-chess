@@ -1,10 +1,10 @@
 package com.andrecarneiro00.ui.terminal;
 
 import com.andrecarneiro00.core.enums.MoveResultEnum;
-import com.andrecarneiro00.core.game.Board;
+import com.andrecarneiro00.core.game.board.Board;
 import com.andrecarneiro00.core.game.Game;
 import com.andrecarneiro00.core.game.Player;
-import com.andrecarneiro00.core.piece.base.Position;
+import com.andrecarneiro00.core.game.board.Position;
 
 import java.util.List;
 import java.util.Scanner;
