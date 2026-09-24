@@ -22,15 +22,15 @@ public class QueenTest {
 
     @Test
     public void givenBlockedQueen_whenPossibleMoves_thenReturnEmptyList() {
-        Queen queen = new Queen(ColorEnum.BLACK, new Position(3,3));
-        Queen block1 = new Queen(ColorEnum.BLACK, new Position(4,3));
-        Queen block2 = new Queen(ColorEnum.BLACK, new Position(2,3));
-        Queen block3 = new Queen(ColorEnum.BLACK, new Position(3,4));
-        Queen block4 = new Queen(ColorEnum.BLACK, new Position(3,2));
-        Queen block5 = new Queen(ColorEnum.BLACK, new Position(4,4));
-        Queen block6 = new Queen(ColorEnum.BLACK, new Position(2,2));
-        Queen block7 = new Queen(ColorEnum.BLACK, new Position(4,2));
-        Queen block8 = new Queen(ColorEnum.BLACK, new Position(2,4));
+        Queen queen = new Queen(ColorEnum.BLACK);
+        Queen block1 = new Queen(ColorEnum.BLACK);
+        Queen block2 = new Queen(ColorEnum.BLACK);
+        Queen block3 = new Queen(ColorEnum.BLACK);
+        Queen block4 = new Queen(ColorEnum.BLACK);
+        Queen block5 = new Queen(ColorEnum.BLACK);
+        Queen block6 = new Queen(ColorEnum.BLACK);
+        Queen block7 = new Queen(ColorEnum.BLACK);
+        Queen block8 = new Queen(ColorEnum.BLACK);
         board.getPieces()[3][3] = queen;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;
@@ -46,10 +46,10 @@ public class QueenTest {
 
     @Test
     public void givenCornerBlockedQueen_whenPossibleMoves_thenReturnEmptyList() {
-        Queen queen = new Queen(ColorEnum.BLACK, new Position(0,0));
-        Queen block1 = new Queen(ColorEnum.BLACK, new Position(0,1));
-        Queen block2 = new Queen(ColorEnum.BLACK, new Position(1,0));
-        Queen block3 = new Queen(ColorEnum.BLACK, new Position(1,1));
+        Queen queen = new Queen(ColorEnum.BLACK);
+        Queen block1 = new Queen(ColorEnum.BLACK);
+        Queen block2 = new Queen(ColorEnum.BLACK);
+        Queen block3 = new Queen(ColorEnum.BLACK);
         board.getPieces()[0][0] = queen;
         board.getPieces()[0][1] = block1;
         board.getPieces()[1][0] = block2;
@@ -57,10 +57,10 @@ public class QueenTest {
         List<Position> possibleMoves = queen.listPossibleMoves(board);
         assertTrue(possibleMoves.isEmpty());
 
-        queen = new Queen(ColorEnum.BLACK, new Position(7,7));
-        block1 = new Queen(ColorEnum.BLACK, new Position(7,6));
-        block2 = new Queen(ColorEnum.BLACK, new Position(6,7));
-        block3 = new Queen(ColorEnum.BLACK, new Position(6,6));
+        queen = new Queen(ColorEnum.BLACK);
+        block1 = new Queen(ColorEnum.BLACK);
+        block2 = new Queen(ColorEnum.BLACK);
+        block3 = new Queen(ColorEnum.BLACK);
         board.getPieces()[7][7] = queen;
         board.getPieces()[7][6] = block1;
         board.getPieces()[6][7] = block2;
@@ -71,15 +71,15 @@ public class QueenTest {
 
     @Test
     public void givenQueen_whenPossibleMoves_thenCanCaptureInEightDirections() {
-        Queen queen = new Queen(ColorEnum.BLACK, new Position(3,3));
-        Queen block1 = new Queen(ColorEnum.WHITE, new Position(4,3));
-        Queen block2 = new Queen(ColorEnum.WHITE, new Position(2,3));
-        Queen block3 = new Queen(ColorEnum.WHITE, new Position(3,4));
-        Queen block4 = new Queen(ColorEnum.WHITE, new Position(3,2));
-        Queen block5 = new Queen(ColorEnum.WHITE, new Position(4,4));
-        Queen block6 = new Queen(ColorEnum.WHITE, new Position(2,2));
-        Queen block7 = new Queen(ColorEnum.WHITE, new Position(4,2));
-        Queen block8 = new Queen(ColorEnum.WHITE, new Position(2,4));
+        Queen queen = new Queen(ColorEnum.BLACK);
+        Queen block1 = new Queen(ColorEnum.WHITE);
+        Queen block2 = new Queen(ColorEnum.WHITE);
+        Queen block3 = new Queen(ColorEnum.WHITE);
+        Queen block4 = new Queen(ColorEnum.WHITE);
+        Queen block5 = new Queen(ColorEnum.WHITE);
+        Queen block6 = new Queen(ColorEnum.WHITE);
+        Queen block7 = new Queen(ColorEnum.WHITE);
+        Queen block8 = new Queen(ColorEnum.WHITE);
         board.getPieces()[3][3] = queen;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;
@@ -95,14 +95,14 @@ public class QueenTest {
 
     @Test
     public void givenOneDirectionFreeQueen_whenPossibleMoves_thenCanMoveInOneDirection() {
-        Queen queen = new Queen(ColorEnum.BLACK, new Position(3,3));
-        Queen block1 = new Queen(ColorEnum.BLACK, new Position(4,3));
-        Queen block2 = new Queen(ColorEnum.BLACK, new Position(2,3));
-        Queen block3 = new Queen(ColorEnum.BLACK, new Position(3,4));
-        Queen block4 = new Queen(ColorEnum.BLACK, new Position(3,2));
-        Queen block5 = new Queen(ColorEnum.BLACK, new Position(4,4));
-        Queen block6 = new Queen(ColorEnum.BLACK, new Position(2,2));
-        Queen block7 = new Queen(ColorEnum.BLACK, new Position(4,2));
+        Queen queen = new Queen(ColorEnum.BLACK);
+        Queen block1 = new Queen(ColorEnum.BLACK);
+        Queen block2 = new Queen(ColorEnum.BLACK);
+        Queen block3 = new Queen(ColorEnum.BLACK);
+        Queen block4 = new Queen(ColorEnum.BLACK);
+        Queen block5 = new Queen(ColorEnum.BLACK);
+        Queen block6 = new Queen(ColorEnum.BLACK);
+        Queen block7 = new Queen(ColorEnum.BLACK);
         board.getPieces()[3][3] = queen;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;

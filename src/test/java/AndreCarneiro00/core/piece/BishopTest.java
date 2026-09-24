@@ -22,11 +22,11 @@ public class BishopTest {
 
     @Test
     public void givenBlockedBishop_whenPossibleMoves_thenReturnEmptyList() {
-        Bishop bishop = new Bishop(ColorEnum.BLACK, new Position(3,3));
-        Bishop block1 = new Bishop(ColorEnum.BLACK, new Position(4,4));
-        Bishop block2 = new Bishop(ColorEnum.BLACK, new Position(2,2));
-        Bishop block3 = new Bishop(ColorEnum.BLACK, new Position(4,2));
-        Bishop block4 = new Bishop(ColorEnum.BLACK, new Position(2,4));
+        Bishop bishop = new Bishop(ColorEnum.BLACK);
+        Bishop block1 = new Bishop(ColorEnum.BLACK);
+        Bishop block2 = new Bishop(ColorEnum.BLACK);
+        Bishop block3 = new Bishop(ColorEnum.BLACK);
+        Bishop block4 = new Bishop(ColorEnum.BLACK);
         board.getPieces()[3][3] = bishop;
         board.getPieces()[4][4] = block1;
         board.getPieces()[2][2] = block2;
@@ -38,15 +38,15 @@ public class BishopTest {
 
     @Test
     public void givenCornerBlockedBishop_whenPossibleMoves_thenReturnEmptyList() {
-        Bishop bishop = new Bishop(ColorEnum.BLACK, new Position(0,0));
-        Bishop block1 = new Bishop(ColorEnum.BLACK, new Position(1,1));
+        Bishop bishop = new Bishop(ColorEnum.BLACK);
+        Bishop block1 = new Bishop(ColorEnum.BLACK);
         board.getPieces()[0][0] = bishop;
         board.getPieces()[1][1] = block1;
         List<Position> possibleMoves = bishop.listPossibleMoves(board);
         assertTrue(possibleMoves.isEmpty());
 
-        bishop = new Bishop(ColorEnum.BLACK, new Position(7,7));
-        block1 = new Bishop(ColorEnum.BLACK, new Position(6,6));
+        bishop = new Bishop(ColorEnum.BLACK);
+        block1 = new Bishop(ColorEnum.BLACK);
         board.getPieces()[7][7] = bishop;
         board.getPieces()[6][6] = block1;
         possibleMoves = bishop.listPossibleMoves(board);
@@ -55,11 +55,11 @@ public class BishopTest {
 
     @Test
     public void givenBishop_whenPossibleMoves_thenCanCaptureInFourDirections() {
-        Bishop bishop = new Bishop(ColorEnum.BLACK, new Position(3,3));
-        Bishop enemy1 = new Bishop(ColorEnum.WHITE, new Position(4,4));
-        Bishop enemy2 = new Bishop(ColorEnum.WHITE, new Position(2,2));
-        Bishop enemy3 = new Bishop(ColorEnum.WHITE, new Position(4,2));
-        Bishop enemy4 = new Bishop(ColorEnum.WHITE, new Position(2,4));
+        Bishop bishop = new Bishop(ColorEnum.BLACK);
+        Bishop enemy1 = new Bishop(ColorEnum.WHITE);
+        Bishop enemy2 = new Bishop(ColorEnum.WHITE);
+        Bishop enemy3 = new Bishop(ColorEnum.WHITE);
+        Bishop enemy4 = new Bishop(ColorEnum.WHITE);
         board.getPieces()[3][3] = bishop;
         board.getPieces()[4][4] = enemy1;
         board.getPieces()[2][2] = enemy2;
@@ -71,10 +71,10 @@ public class BishopTest {
 
     @Test
     public void givenOneDirectionFreeBishop_whenPossibleMoves_thenCanMoveInOneDirection() {
-        Bishop bishop = new Bishop(ColorEnum.BLACK, new Position(3,3));
-        Bishop block1 = new Bishop(ColorEnum.BLACK, new Position(2,2));
-        Bishop block2 = new Bishop(ColorEnum.BLACK, new Position(4,2));
-        Bishop block3 = new Bishop(ColorEnum.BLACK, new Position(2,4));
+        Bishop bishop = new Bishop(ColorEnum.BLACK);
+        Bishop block1 = new Bishop(ColorEnum.BLACK);
+        Bishop block2 = new Bishop(ColorEnum.BLACK);
+        Bishop block3 = new Bishop(ColorEnum.BLACK);
         board.getPieces()[3][3] = bishop;
         board.getPieces()[2][2] = block1;
         board.getPieces()[4][2] = block2;

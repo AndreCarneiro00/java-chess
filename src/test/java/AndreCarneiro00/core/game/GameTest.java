@@ -6,6 +6,7 @@ import com.andrecarneiro00.core.game.Game;
 import com.andrecarneiro00.core.game.Player;
 import com.andrecarneiro00.core.game.board.initializers.EmptyInitializer;
 import com.andrecarneiro00.core.game.board.Position;
+import com.andrecarneiro00.core.piece.King;
 import com.andrecarneiro00.core.piece.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,14 +24,17 @@ public class GameTest {
     @BeforeEach
     public void setUp() {
         game = new Game(8, new EmptyInitializer());
+        game.getBoard().getPieces()[7][4] = new King(ColorEnum.WHITE);
+        game.getBoard().getPieces()[0][4] = new King(ColorEnum.BLACK);
     }
 
     @Test
     public void whenMovePiece_thenTurnChanges() {
-        Player currentPlayer = game.getTurn();
-        game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.BLACK, new Position(1, 1));
-        game.movePiece(new Position(1,1), new Position(2,1));
-        assertEquals(currentPlayer.getColor(), game.getTurn().getColor());
+        game.getBoard().getPieces()[6][1] = new Pawn(ColorEnum.WHITE);
+
+        game.movePiece(new Position(6, 1), new Position(5, 1));
+
+        assertEquals(ColorEnum.BLACK, game.getTurn().getColor());
     }
 
     @Test
@@ -87,7 +91,7 @@ public class GameTest {
 
     @Test
     public void givenPositionWithIncorrectColor_whenMovePiece_thenReturnFalse() {
-        game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.BLACK, new Position(1, 1));
+        game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.BLACK);
         Position currentPosition = new Position(1, 1);
         Position nextPosition = new Position(2, 1);
         MoveResultEnum result = game.movePiece(currentPosition, nextPosition);
@@ -96,18 +100,18 @@ public class GameTest {
 
     @Test
     public void givenPathIsBlockedByAnotherPiece_whenMovePiece_thenReturnFalse() {
-        game.getBoard().getPieces()[0][0] = new Pawn(ColorEnum.BLACK, new Position(0, 0));
-        game.getBoard().getPieces()[1][0] = new Pawn(ColorEnum.BLACK, new Position(1, 0));
-        Position currentPosition = new Position(0, 0);
-        Position nextPosition = new Position(1, 0);
+        game.getBoard().getPieces()[6][0] = new Pawn(ColorEnum.WHITE);
+        game.getBoard().getPieces()[5][0] = new Pawn(ColorEnum.WHITE);
+        Position currentPosition = new Position(6, 0);
+        Position nextPosition = new Position(5, 0);
         MoveResultEnum result = game.movePiece(currentPosition, nextPosition);
         assertEquals(MoveResultEnum.INVALID_MOVE, result);
     }
 
     @Test
     public void givenPositionWithEnemy_whenMovePiece_thenCapture() {
-        game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.WHITE, new Position(1, 1));
-        game.getBoard().getPieces()[0][0] = new Pawn(ColorEnum.BLACK, new Position(0, 0));
+        game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.WHITE);
+        game.getBoard().getPieces()[0][0] = new Pawn(ColorEnum.BLACK);
         Position currentPosition = new Position(1, 1);
         Position nextPosition = new Position(0, 0);
         Player player1 = game.getTurn();
@@ -117,8 +121,8 @@ public class GameTest {
 
     @Test
     public void givenValidPosition_whenMovePiece_thenReturnTrue() {
-        game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.WHITE, new Position(1, 1));
-        game.getBoard().getPieces()[0][0] = new Pawn(ColorEnum.BLACK, new Position(0, 0));
+        game.getBoard().getPieces()[1][1] = new Pawn(ColorEnum.WHITE);
+        game.getBoard().getPieces()[0][0] = new Pawn(ColorEnum.BLACK);
         Position currentPosition = new Position(1, 1);
         Position nextPosition = new Position(0, 0);
         MoveResultEnum result = game.movePiece(currentPosition, nextPosition);
@@ -127,11 +131,15 @@ public class GameTest {
 
     @Test
     public void givenMovedPawn_whenMovePiece_thenCannotAdvanceTwoPositions() {
-        game.getBoard().getPieces()[7][7] = new Pawn(ColorEnum.WHITE, new Position(7, 7));
+        game.getBoard().getPieces()[7][7] = new Pawn(ColorEnum.WHITE);
+        game.getBoard().getPieces()[1][0] = new Pawn(ColorEnum.BLACK);
         Position currentPosition = new Position(7, 7);
         Position nextPosition = new Position(5, 7);
         game.movePiece(currentPosition, nextPosition);
+        game.movePiece(new Position(1, 0), new Position(2, 0));
+
         MoveResultEnum result = game.movePiece(nextPosition, new Position(3, 7));
+
         assertEquals(MoveResultEnum.INVALID_MOVE, result);
     }
 }

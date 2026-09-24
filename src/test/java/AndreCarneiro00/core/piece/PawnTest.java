@@ -23,7 +23,7 @@ public class PawnTest {
 
     @Test
     public void givenNewPawn_whenPossibleMoves_thenCanMoveTwoPositions() {
-        Pawn pawn = new Pawn(ColorEnum.BLACK, new Position(1,1));
+        Pawn pawn = new Pawn(ColorEnum.BLACK);
         board.getPieces()[1][1] = pawn;
         List<Position> possibleMoves = pawn.listPossibleMoves(board);
         assertTrue(possibleMoves.contains(new Position(3, 1)));
@@ -31,7 +31,7 @@ public class PawnTest {
 
     @Test
     public void givenBlackPawn_whenPossibleMoves_thenCanOnlyMovePlusX() {
-        Pawn pawn = new Pawn(ColorEnum.BLACK, new Position(4,1));
+        Pawn pawn = new Pawn(ColorEnum.BLACK);
         board.getPieces()[4][1] = pawn;
         List<Position> possibleMoves = pawn.listPossibleMoves(board);
         assertTrue(
@@ -44,7 +44,7 @@ public class PawnTest {
 
     @Test
     public void givenBlackPawnWithDiagonalEnemies_whenPossibleMoves_thenCanCaptureDiagonally() {
-        Pawn pawn = new Pawn(ColorEnum.WHITE, new Position(4,1));
+        Pawn pawn = new Pawn(ColorEnum.WHITE);
         board.getPieces()[4][1] = pawn;
         List<Position> possibleMoves = pawn.listPossibleMoves(board);
         assertTrue(
@@ -57,9 +57,9 @@ public class PawnTest {
 
     @Test
     public void givenBlackPawnWithDiagonalAllies_whenPossibleMoves_thenCannotCaptureDiagonally() {
-        Pawn pawn = new Pawn(ColorEnum.BLACK, new Position(4,1));
-        Pawn enemy1 = new Pawn(ColorEnum.BLACK, new Position(5,2));
-        Pawn enemy2 = new Pawn(ColorEnum.BLACK, new Position(5,0));
+        Pawn pawn = new Pawn(ColorEnum.BLACK);
+        Pawn enemy1 = new Pawn(ColorEnum.BLACK);
+        Pawn enemy2 = new Pawn(ColorEnum.BLACK);
         board.getPieces()[4][1] = pawn;
         board.getPieces()[5][2] = enemy1;
         board.getPieces()[5][0] = enemy2;
@@ -70,8 +70,8 @@ public class PawnTest {
 
     @Test
     public void givenBlackBlockedPawn_whenPossibleMoves_thenReturnEmptyList() {
-        Pawn pawn = new Pawn(ColorEnum.BLACK, new Position(4,1));
-        Pawn enemy1 = new Pawn(ColorEnum.BLACK, new Position(5,1));
+        Pawn pawn = new Pawn(ColorEnum.BLACK);
+        Pawn enemy1 = new Pawn(ColorEnum.BLACK);
         board.getPieces()[4][1] = pawn;
         board.getPieces()[5][1] = enemy1;
         List<Position> possibleMoves = pawn.listPossibleMoves(board);
@@ -80,8 +80,8 @@ public class PawnTest {
 
     @Test
     public void givenBlackPawnWhithOnePossibleMovement_whenPossibleMoves_thenReturnSizeOneList() {
-        Pawn pawn = new Pawn(ColorEnum.BLACK, new Position(1,1));
-        Pawn enemy1 = new Pawn(ColorEnum.BLACK, new Position(3,1));
+        Pawn pawn = new Pawn(ColorEnum.BLACK);
+        Pawn enemy1 = new Pawn(ColorEnum.BLACK);
         board.getPieces()[1][1] = pawn;
         board.getPieces()[3][1] = enemy1;
         List<Position> possibleMoves = pawn.listPossibleMoves(board);
@@ -90,8 +90,8 @@ public class PawnTest {
 
     @Test
     public void givenPawnOnLimits_whenPossibleMoves_thenReturnEmptyList() {
-        Pawn blackPawnLastPosition = new Pawn(ColorEnum.BLACK, new Position(7,0));
-        Pawn whitePawnLastPosition = new Pawn(ColorEnum.WHITE, new Position(0,0));
+        Pawn blackPawnLastPosition = new Pawn(ColorEnum.BLACK);
+        Pawn whitePawnLastPosition = new Pawn(ColorEnum.WHITE);
         board.getPieces()[7][0] = blackPawnLastPosition;
         board.getPieces()[0][0] = whitePawnLastPosition;
         List<Position> blackPossibleMoves = blackPawnLastPosition.listPossibleMoves(board);

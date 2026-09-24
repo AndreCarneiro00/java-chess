@@ -22,11 +22,11 @@ public class RockTest {
 
     @Test
     public void givenBlockedRook_whenPossibleMoves_thenReturnEmptyList() {
-        Rook rook = new Rook(ColorEnum.BLACK, new Position(3,3));
-        Rook block1 = new Rook(ColorEnum.BLACK, new Position(4,3));
-        Rook block2 = new Rook(ColorEnum.BLACK, new Position(2,3));
-        Rook block3 = new Rook(ColorEnum.BLACK, new Position(3,4));
-        Rook block4 = new Rook(ColorEnum.BLACK, new Position(3,2));
+        Rook rook = new Rook(ColorEnum.BLACK);
+        Rook block1 = new Rook(ColorEnum.BLACK);
+        Rook block2 = new Rook(ColorEnum.BLACK);
+        Rook block3 = new Rook(ColorEnum.BLACK);
+        Rook block4 = new Rook(ColorEnum.BLACK);
         board.getPieces()[3][3] = rook;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;
@@ -38,18 +38,18 @@ public class RockTest {
 
     @Test
     public void givenCornerBlockedRook_whenPossibleMoves_thenReturnEmptyList() {
-        Rook rook = new Rook(ColorEnum.BLACK, new Position(0,0));
-        Rook block1 = new Rook(ColorEnum.BLACK, new Position(0,1));
-        Rook block2 = new Rook(ColorEnum.BLACK, new Position(1,0));
+        Rook rook = new Rook(ColorEnum.BLACK);
+        Rook block1 = new Rook(ColorEnum.BLACK);
+        Rook block2 = new Rook(ColorEnum.BLACK);
         board.getPieces()[0][0] = rook;
         board.getPieces()[0][1] = block1;
         board.getPieces()[1][0] = block2;
         List<Position> possibleMoves = rook.listPossibleMoves(board);
         assertTrue(possibleMoves.isEmpty());
 
-        rook = new Rook(ColorEnum.BLACK, new Position(7,7));
-        block1 = new Rook(ColorEnum.BLACK, new Position(7,6));
-        block2 = new Rook(ColorEnum.BLACK, new Position(6,7));
+        rook = new Rook(ColorEnum.BLACK);
+        block1 = new Rook(ColorEnum.BLACK);
+        block2 = new Rook(ColorEnum.BLACK);
         board.getPieces()[7][7] = rook;
         board.getPieces()[7][6] = block1;
         board.getPieces()[6][7] = block2;
@@ -59,11 +59,11 @@ public class RockTest {
 
     @Test
     public void givenRook_whenPossibleMoves_thenCanCaptureInFourDirections() {
-        Rook rook = new Rook(ColorEnum.BLACK, new Position(3,3));
-        Rook block1 = new Rook(ColorEnum.WHITE, new Position(4,3));
-        Rook block2 = new Rook(ColorEnum.WHITE, new Position(2,3));
-        Rook block3 = new Rook(ColorEnum.WHITE, new Position(3,4));
-        Rook block4 = new Rook(ColorEnum.WHITE, new Position(3,2));
+        Rook rook = new Rook(ColorEnum.BLACK);
+        Rook block1 = new Rook(ColorEnum.WHITE);
+        Rook block2 = new Rook(ColorEnum.WHITE);
+        Rook block3 = new Rook(ColorEnum.WHITE);
+        Rook block4 = new Rook(ColorEnum.WHITE);
         board.getPieces()[3][3] = rook;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;
@@ -75,10 +75,10 @@ public class RockTest {
 
     @Test
     public void givenOneDirectionFreeRook_whenPossibleMoves_thenCanMoveInOneDirection() {
-        Rook rook = new Rook(ColorEnum.BLACK, new Position(3,3));
-        Rook block1 = new Rook(ColorEnum.BLACK, new Position(4,3));
-        Rook block2 = new Rook(ColorEnum.BLACK, new Position(2,3));
-        Rook block3 = new Rook(ColorEnum.BLACK, new Position(3,4));
+        Rook rook = new Rook(ColorEnum.BLACK);
+        Rook block1 = new Rook(ColorEnum.BLACK);
+        Rook block2 = new Rook(ColorEnum.BLACK);
+        Rook block3 = new Rook(ColorEnum.BLACK);
         board.getPieces()[3][3] = rook;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;

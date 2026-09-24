@@ -22,7 +22,7 @@ public class KnightTest {
 
     @Test
     public void givenFreeKnight_whenListPossibleMoves_thenReturnEightMoves() {
-        Knight knight = new Knight(ColorEnum.BLACK, new Position(3,3));
+        Knight knight = new Knight(ColorEnum.BLACK);
         board.getPieces()[3][3] = knight;
         List<Position> possibleMoves = knight.listPossibleMoves(board);
         assertEquals(8, possibleMoves.size());
@@ -30,15 +30,15 @@ public class KnightTest {
 
     @Test
     public void givenBlockedBlackKnight_whenListPossibleMoves_thenReturnZeroMoves() {
-        Knight knight = new Knight(ColorEnum.BLACK, new Position(3,3));
-        Knight block1 = new Knight(ColorEnum.BLACK, new Position(1,2));
-        Knight block2 = new Knight(ColorEnum.BLACK, new Position(1,4));
-        Knight block3 = new Knight(ColorEnum.BLACK, new Position(5,4));
-        Knight block4 = new Knight(ColorEnum.BLACK, new Position(5,2));
-        Knight block5 = new Knight(ColorEnum.BLACK, new Position(2,5));
-        Knight block6 = new Knight(ColorEnum.BLACK, new Position(4,5));
-        Knight block7 = new Knight(ColorEnum.BLACK, new Position(2,1));
-        Knight block8 = new Knight(ColorEnum.BLACK, new Position(4,1));
+        Knight knight = new Knight(ColorEnum.BLACK);
+        Knight block1 = new Knight(ColorEnum.BLACK);
+        Knight block2 = new Knight(ColorEnum.BLACK);
+        Knight block3 = new Knight(ColorEnum.BLACK);
+        Knight block4 = new Knight(ColorEnum.BLACK);
+        Knight block5 = new Knight(ColorEnum.BLACK);
+        Knight block6 = new Knight(ColorEnum.BLACK);
+        Knight block7 = new Knight(ColorEnum.BLACK);
+        Knight block8 = new Knight(ColorEnum.BLACK);
         board.getPieces()[3][3] = knight;
         board.getPieces()[1][2] = block1;
         board.getPieces()[1][4] = block2;
@@ -54,22 +54,21 @@ public class KnightTest {
 
     @Test
     public void givenCornerBlockedBlackKnight_whenListPossibleMoves_thenReturnZeroMoves() {
-        Knight knight = new Knight(ColorEnum.BLACK, new Position(0,0));
-        Knight block1 = new Knight(ColorEnum.BLACK, new Position(1,2));
-        Knight block2 = new Knight(ColorEnum.BLACK, new Position(2,1));
-        board.getPieces()[3][3] = knight;
+        Knight knight = new Knight(ColorEnum.BLACK);
+        Knight block1 = new Knight(ColorEnum.BLACK);
+        Knight block2 = new Knight(ColorEnum.BLACK);
+        board.getPieces()[0][0] = knight;
         board.getPieces()[1][2] = block1;
         board.getPieces()[2][1] = block2;
         List<Position> possibleMoves = knight.listPossibleMoves(board);
         assertTrue(possibleMoves.isEmpty());
 
-        knight = new Knight(ColorEnum.BLACK, new Position(7,7));
-        block1 = new Knight(ColorEnum.BLACK, new Position(6,5));
-        block2 = new Knight(ColorEnum.BLACK, new Position(5,6));
+        knight = new Knight(ColorEnum.BLACK);
+        block1 = new Knight(ColorEnum.BLACK);
+        block2 = new Knight(ColorEnum.BLACK);
         board.getPieces()[7][7] = knight;
         board.getPieces()[6][5] = block1;
         board.getPieces()[5][6] = block2;
-        System.out.println(board);
         possibleMoves = knight.listPossibleMoves(board);
         assertTrue(possibleMoves.isEmpty());
     }

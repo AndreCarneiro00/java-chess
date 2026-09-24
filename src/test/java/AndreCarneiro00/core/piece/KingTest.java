@@ -22,15 +22,15 @@ public class KingTest {
 
     @Test
     public void givenBlockedKing_whenPossibleMoves_thenReturnEmptyList() {
-        King king = new King(ColorEnum.BLACK, new Position(3,3));
-        King block1 = new King(ColorEnum.BLACK, new Position(4,3));
-        King block2 = new King(ColorEnum.BLACK, new Position(2,3));
-        King block3 = new King(ColorEnum.BLACK, new Position(3,4));
-        King block4 = new King(ColorEnum.BLACK, new Position(3,2));
-        King block5 = new King(ColorEnum.BLACK, new Position(4,4));
-        King block6 = new King(ColorEnum.BLACK, new Position(2,2));
-        King block7 = new King(ColorEnum.BLACK, new Position(4,2));
-        King block8 = new King(ColorEnum.BLACK, new Position(2,4));
+        King king = new King(ColorEnum.BLACK);
+        King block1 = new King(ColorEnum.BLACK);
+        King block2 = new King(ColorEnum.BLACK);
+        King block3 = new King(ColorEnum.BLACK);
+        King block4 = new King(ColorEnum.BLACK);
+        King block5 = new King(ColorEnum.BLACK);
+        King block6 = new King(ColorEnum.BLACK);
+        King block7 = new King(ColorEnum.BLACK);
+        King block8 = new King(ColorEnum.BLACK);
         board.getPieces()[3][3] = king;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;
@@ -46,10 +46,10 @@ public class KingTest {
 
     @Test
     public void givenCornerBlockedKing_whenPossibleMoves_thenReturnEmptyList() {
-        King king = new King(ColorEnum.BLACK, new Position(0,0));
-        King block1 = new King(ColorEnum.BLACK, new Position(0,1));
-        King block2 = new King(ColorEnum.BLACK, new Position(1,0));
-        King block3 = new King(ColorEnum.BLACK, new Position(1,1));
+        King king = new King(ColorEnum.BLACK);
+        King block1 = new King(ColorEnum.BLACK);
+        King block2 = new King(ColorEnum.BLACK);
+        King block3 = new King(ColorEnum.BLACK);
         board.getPieces()[0][0] = king;
         board.getPieces()[0][1] = block1;
         board.getPieces()[1][0] = block2;
@@ -57,10 +57,10 @@ public class KingTest {
         List<Position> possibleMoves = king.listPossibleMoves(board);
         assertTrue(possibleMoves.isEmpty());
 
-        king = new King(ColorEnum.BLACK, new Position(7,7));
-        block1 = new King(ColorEnum.BLACK, new Position(7,6));
-        block2 = new King(ColorEnum.BLACK, new Position(6,7));
-        block3 = new King(ColorEnum.BLACK, new Position(6,6));
+        king = new King(ColorEnum.BLACK);
+        block1 = new King(ColorEnum.BLACK);
+        block2 = new King(ColorEnum.BLACK);
+        block3 = new King(ColorEnum.BLACK);
         board.getPieces()[7][7] = king;
         board.getPieces()[7][6] = block1;
         board.getPieces()[6][7] = block2;
@@ -71,15 +71,15 @@ public class KingTest {
 
     @Test
     public void givenKing_whenPossibleMoves_thenCanCaptureInEightDirections() {
-        King king = new King(ColorEnum.BLACK, new Position(3,3));
-        King block1 = new King(ColorEnum.WHITE, new Position(4,3));
-        King block2 = new King(ColorEnum.WHITE, new Position(2,3));
-        King block3 = new King(ColorEnum.WHITE, new Position(3,4));
-        King block4 = new King(ColorEnum.WHITE, new Position(3,2));
-        King block5 = new King(ColorEnum.WHITE, new Position(4,4));
-        King block6 = new King(ColorEnum.WHITE, new Position(2,2));
-        King block7 = new King(ColorEnum.WHITE, new Position(4,2));
-        King block8 = new King(ColorEnum.WHITE, new Position(2,4));
+        King king = new King(ColorEnum.BLACK);
+        King block1 = new King(ColorEnum.WHITE);
+        King block2 = new King(ColorEnum.WHITE);
+        King block3 = new King(ColorEnum.WHITE);
+        King block4 = new King(ColorEnum.WHITE);
+        King block5 = new King(ColorEnum.WHITE);
+        King block6 = new King(ColorEnum.WHITE);
+        King block7 = new King(ColorEnum.WHITE);
+        King block8 = new King(ColorEnum.WHITE);
         board.getPieces()[3][3] = king;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;
@@ -95,14 +95,14 @@ public class KingTest {
 
     @Test
     public void givenOneDirectionFreeKing_whenPossibleMoves_thenCanMoveInOneDirection() {
-        King king = new King(ColorEnum.BLACK, new Position(3,3));
-        King block1 = new King(ColorEnum.BLACK, new Position(4,3));
-        King block2 = new King(ColorEnum.BLACK, new Position(2,3));
-        King block3 = new King(ColorEnum.BLACK, new Position(3,4));
-        King block4 = new King(ColorEnum.BLACK, new Position(3,2));
-        King block5 = new King(ColorEnum.BLACK, new Position(4,4));
-        King block6 = new King(ColorEnum.BLACK, new Position(2,2));
-        King block7 = new King(ColorEnum.BLACK, new Position(4,2));
+        King king = new King(ColorEnum.BLACK);
+        King block1 = new King(ColorEnum.BLACK);
+        King block2 = new King(ColorEnum.BLACK);
+        King block3 = new King(ColorEnum.BLACK);
+        King block4 = new King(ColorEnum.BLACK);
+        King block5 = new King(ColorEnum.BLACK);
+        King block6 = new King(ColorEnum.BLACK);
+        King block7 = new King(ColorEnum.BLACK);
         board.getPieces()[3][3] = king;
         board.getPieces()[4][3] = block1;
         board.getPieces()[2][3] = block2;
